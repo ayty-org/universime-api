@@ -2,13 +2,17 @@ server:
   port: 8080
 
 spring:
+  h2:
+    console:
+      enabled: true
   application:
     name: hatcher-api
-    datasource:
-      url: jdbc:h2:mem:testdb
-      username: sa
-      password: password
-      initialization-mode: always
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+    initialization-mode: always
+    driver-class-name: org.h2.Driver
   jpa:
     show-sql: false
     open-in-view: true
