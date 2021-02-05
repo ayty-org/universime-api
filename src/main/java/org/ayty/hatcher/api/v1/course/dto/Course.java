@@ -1,4 +1,4 @@
-package org.ayty.hatcher.api.v1.competence.dto;
+package org.ayty.hatcher.api.v1.course.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -20,7 +20,7 @@ public class Course implements Serializable {
     private Long id;
 
     @NotEmpty(message = "Não pode ser deixado vazio")
-    @Length(min=3, max=100, message = "O nome dever ter entre 3 e 100 caracteres")
+    @Length(min=3, max=255, message = "O nome dever ter entre 3 e 100 caracteres")
     private String name;
 
     private String description;

@@ -1,34 +1,26 @@
-package org.ayty.hatcher.api.v1.competence.service;
+package org.ayty.hatcher.api.v1.course.repository;
 
-import org.assertj.core.api.Assertions;
-import org.ayty.hatcher.api.v1.competence.dto.Course;
-import org.ayty.hatcher.api.v1.competence.jpa.CourseRepository;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.ayty.hatcher.api.v1.course.dto.Course;
+import org.ayty.hatcher.api.v1.course.jpa.CourseRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.GeneratedValue;
-import javax.validation.ConstraintViolationException;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+@Tag("Repository")
+@DisplayName("Persistence of Data")
 
-import static org.assertj.core.api.Assertions.*;
-
-
-@RunWith(SpringRunner.class)
 @DataJpaTest
-public class CourseRepositoryTest {
+class CourseRepositoryTest {
+
     @Autowired
     private CourseRepository courseRepository;
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void createShouldPersistData(){
+    void createShouldPersistData(){
         Course course = new Course(null, "name", "desc");
         this.courseRepository.save(course);
         assertThat(course.getId()).isNotNull();
@@ -38,7 +30,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    public void deleteShouldRemoveData() {
+    void deleteShouldRemoveData() {
         Course course = new Course(null, "name", "desc");
         this.courseRepository.save(course);
         this.courseRepository.delete(course);
@@ -47,7 +39,7 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    public void updateShouldChangeAndPersistData(){
+    void updateShouldChangeAndPersistData(){
         Course course = new Course(null, "name", "desc");
         this.courseRepository.save(course);
         course.setName("name2");
@@ -58,13 +50,6 @@ public class CourseRepositoryTest {
         assertThat(course.getName()).isEqualTo("name2");
         assertThat(course.getDescription()).isEqualTo("Desc2");
 
-    }
-
-    @Test
-    public void nameNullShouldThrownConstraintViolationException(){
-        thrown.expect(ConstraintViolationException.class);
-        thrown.expectMessage("Não pode ser deixado vazio");
-        this.courseRepository.save(new Course());
     }
 
 }

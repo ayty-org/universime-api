@@ -1,6 +1,6 @@
-package org.ayty.hatcher.api.v1.competence.dto;
+package org.ayty.hatcher.api.v1.course.dto;
 
-import org.ayty.hatcher.api.v1.competence.service.CourseService;
+import org.ayty.hatcher.api.v1.course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/courses")
-public class CourseDTO {
+public class CourseController {
 
     @Autowired
     private CourseService service;

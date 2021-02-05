@@ -1,9 +1,9 @@
-package org.ayty.hatcher.api.v1.competence.service;
+package org.ayty.hatcher.api.v1.course.service;
 
 
-import org.ayty.hatcher.api.v1.competence.dto.Course;
-import org.ayty.hatcher.api.v1.competence.exception.ObjectNotFoundException;
-import org.ayty.hatcher.api.v1.competence.jpa.CourseRepository;
+import org.ayty.hatcher.api.v1.course.dto.Course;
+import org.ayty.hatcher.api.v1.course.exception.ObjectNotFoundException;
+import org.ayty.hatcher.api.v1.course.jpa.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

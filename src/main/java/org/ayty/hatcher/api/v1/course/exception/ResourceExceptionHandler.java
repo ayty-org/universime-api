@@ -1,4 +1,4 @@
-package org.ayty.hatcher.api.v1.competence.exception;
+package org.ayty.hatcher.api.v1.course.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

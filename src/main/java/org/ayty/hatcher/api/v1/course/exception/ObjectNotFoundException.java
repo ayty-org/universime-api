@@ -1,4 +1,4 @@
-package org.ayty.hatcher.api.v1.competence.exception;
+package org.ayty.hatcher.api.v1.course.exception;
 
 public class ObjectNotFoundException extends RuntimeException{
 
