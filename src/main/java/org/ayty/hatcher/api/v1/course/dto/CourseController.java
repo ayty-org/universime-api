@@ -27,8 +27,9 @@ public class CourseController {
         List<Course> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
-    @ResponseStatus(code = HttpStatus.OK)
+
     @GetMapping(value = "/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
     public ResponseEntity<Course> findById (@PathVariable Long id){
         Course obj = this.service.findById(id);
         return ResponseEntity.ok().body(obj);
@@ -39,7 +40,6 @@ public class CourseController {
     public ResponseEntity <Course> update (@PathVariable Long id, @RequestBody Course obj) {
         Course newObj = this.service.update(id, obj);
         return ResponseEntity.ok().body(newObj);
-
     }
 
     @PostMapping
