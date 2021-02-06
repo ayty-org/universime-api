@@ -1,42 +1,19 @@
 package org.ayty.hatcher.api.v1.course.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 public class StandardError {
 
-    private Integer status;
-    private Long timestamp;
-    private String message;
+    @Getter @Setter private Integer status;
+    @Getter @Setter private Long timestamp;
+    @Getter @Setter private String message;
 
-    public StandardError() {
-        super();
-    }
-
-    public StandardError(Integer status, Long timestamp, String message) {
-        this.status = status;
-        this.timestamp = timestamp;
-        this.message = message;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
