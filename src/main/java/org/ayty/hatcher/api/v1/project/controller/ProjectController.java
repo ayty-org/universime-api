@@ -5,14 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ayty.hatcher.api.v1.project.dto.ProjectDTO;
 import org.ayty.hatcher.api.v1.project.model.Project;
-import org.ayty.hatcher.api.v1.project.service.DeleteProjectService;
-import org.ayty.hatcher.api.v1.project.service.FindAllProjectService;
-import org.ayty.hatcher.api.v1.project.service.FindProjectByIdService;
-import org.ayty.hatcher.api.v1.project.service.UpdateProjectService;
+import org.ayty.hatcher.api.v1.project.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,6 +28,8 @@ public class ProjectController {
 
     private final UpdateProjectService updateProjectService;
 
+    private final SaveProjectService saveProjectService;
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Project> find(@PathVariable Integer id) {
         Project project = this.findProjectByIdService.findById(id).get();
@@ -41,18 +42,26 @@ public class ProjectController {
         return ResponseEntity.ok().body(ProjectDTO.from(projectList));
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        deleteProjectService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @PostMapping
+    public ResponseEntity<Void> save(@Valid @RequestBody ProjectDTO projectDTO) {
+        Project project = fromDTO(projectDTO);
+        this.saveProjectService.save(project);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(project.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update(@Valid @PathVariable Integer id, @RequestBody ProjectDTO projectDTO) {
         Project project = fromDTO(projectDTO);
-        log.info("Project: {}", project);
         project.setId(id);
         updateProjectService.update(project);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        deleteProjectService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -26,12 +29,26 @@ public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotNull
+    @NotEmpty
+    @Size(min = 3, max = 255)
     private String name;
+
+    @NotNull
+    @NotEmpty
     private String description;
+
+    @NotNull
+    @NotEmpty
     private String logo;
 
+    @NotNull
+    @NotEmpty
     private Date startDate;
 
+    @NotNull
+    @NotEmpty
     private Date endDate;
 
 //    private List<User> coordenators;

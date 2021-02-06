@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
 @Tag("service")
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +37,7 @@ public class FindProjectByIdServiceImplTest {
 
         Project project = ProjectBuilder.createProject();
 
-        BDDMockito.when(this.projectRepository.findById(1))
+        when(this.projectRepository.findById(1))
                 .thenReturn(Optional.of(project));
 
         assertEquals(project.getId(), findProjectByIdServiceImpl.findById(project.getId()).get().getId());
@@ -53,7 +54,7 @@ public class FindProjectByIdServiceImplTest {
 
         Project project = ProjectBuilder.createProject();
 
-        BDDMockito.when(this.projectRepository.findById(ArgumentMatchers.anyInt()))
+        when(this.projectRepository.findById(ArgumentMatchers.anyInt()))
                 .thenReturn(Optional.empty());
         assertThrows(
                 ProjectNotFoundException.class,
