@@ -1,15 +1,13 @@
 package org.ayty.hatcher.api.v1.user.service;
 
-import org.ayty.hatcher.api.v1.user.entity.User;
-
-import org.ayty.hatcher.api.v1.user.dto.*;
+import org.ayty.hatcher.api.v1.user.dto.OutRegisterDTO;
+import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
 
 @FunctionalInterface
 public interface RegisterUser {
 	
-	//User registre (String token,RegisterUserDTO user);
-	
-	User save(RegisterUserDTO user);
+		
+	OutRegisterDTO save(RegisterUserDTO user);
 		
 	
 

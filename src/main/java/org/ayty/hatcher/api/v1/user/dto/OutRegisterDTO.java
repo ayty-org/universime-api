@@ -7,25 +7,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserListDTO {
-
+public class OutRegisterDTO {
 	
-
 	private String login;
-	private String fullname;
+	
 	private String email;
 	
-	public UserListDTO(User user) {
+	private String fullName;
+	
+	private boolean admin;
+	
+	public OutRegisterDTO(User user) {
 		this.login = user.getLogin();
-		this.fullname = user.getFullName();
 		this.email = user.getEmail();
+		this.fullName = user.getFullName();
+		this.admin = user.isAdmin();
 	}
-	
-	
-	
 
 }

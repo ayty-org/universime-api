@@ -1,13 +1,15 @@
+CREATE SEQUENCE user_sequence INCREMENT BY 1;
+
 Create table tb_user(
-	id bigint,
-	login varchar (50) not null,
-	password varchar(50) not null,
-	email varchar (50) not null,
-	full_name varchar(50) not null,
-	image varchar (50),
+	id bigint DEFAULT nextval('user_sequence'),
+	login varchar (255) not null,
+	password varchar(255) not null,
+	email varchar (255) not null,
+	full_name varchar(255) not null,
+	image varchar (255),
 	admin BOOLEAN,
 	perfil varchar(255)
 	
 	
 );	
-	CREATE SEQUENCE User_sequence INCREMENT BY 1;
+	

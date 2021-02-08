@@ -1,1 +1,0 @@
-insert into tb_user values(1,'admin','admin','admin@gmail.com','admin','admin',true,'admin');

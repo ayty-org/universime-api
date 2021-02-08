@@ -6,23 +6,25 @@ import java.util.stream.Collectors;
 import org.ayty.hatcher.api.v1.user.dto.UserListDTO;
 import org.ayty.hatcher.api.v1.user.entity.User;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Service
+@RequiredArgsConstructor
 public class ListUsersImpl implements ListUsers{
 	
-	@Autowired
-	private UserRepository userBD;
+	
+	private final UserRepository userBD;
 
 	@Override
 	public List<UserListDTO> listOfRegisteredUsers() {
 		List<User> listUser = userBD.findAll();
-		List<UserListDTO>dto = listUser.stream().map(x -> new UserListDTO(x.getLogin(), 
-				x.getFullName(), x.getEmail())).collect(Collectors.toList());
+		System.out.println(userBD.findAll().size());
+		List<UserListDTO> dto = listUser.stream().map(x -> new UserListDTO(x)).collect(Collectors.toList());
 		return dto;
-		
 	}
+	
 
 }

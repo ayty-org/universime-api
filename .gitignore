@@ -107,6 +107,12 @@ local.properties
 # .idea/modules
 # *.iml
 # *.ipr
+# *.idea/compiler.xml#.
+# *.idea/dataSources.xml
+# *.idea/hatcher-api.iml
+# *.idea/misc.xml
+# *.idea/sqldialects.xml
+
 
 # CMake
 cmake-build-*/

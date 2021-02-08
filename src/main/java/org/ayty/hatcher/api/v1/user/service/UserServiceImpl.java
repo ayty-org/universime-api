@@ -7,6 +7,8 @@ package org.ayty.hatcher.api.v1.user.service;
 
 import javax.transaction.Transactional;
 
+
+
 import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
 import org.ayty.hatcher.api.v1.user.entity.User;
 import org.ayty.hatcher.api.v1.user.exception.InvalidPasswordException;
@@ -26,7 +28,7 @@ public class UserServiceImpl implements UserDetailsService {
 	private PasswordEncoder encoder;
 	
 	@Autowired
-	private UserRepository userBD;
+	UserRepository userBD;
 	
 	
 	@Transactional
@@ -42,7 +44,6 @@ public class UserServiceImpl implements UserDetailsService {
 				.fullName(user.getFullName())
 				.image(user.getImage())
 				.admin(admin)
-				.perfil(user.getPerfil())
 				.build());
 	}
 	 public UserDetails authenticate( User user ){

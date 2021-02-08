@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserServiceImpl userService;
 
 	@Autowired
-	private JwtService jwtService;
+	JwtService jwtService;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -49,6 +49,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        http
 	            .cors().and().csrf().disable()
 	            .authorizeRequests()
+	            	.antMatchers(HttpMethod.POST,"/hatcher/Authenticate")
+	            		.permitAll()
+	            	.antMatchers(HttpMethod.GET,"/hatcher/listUsers")
+	            		.permitAll()
+	            	.antMatchers(HttpMethod.POST,"/hatcher/register")
+	            		.permitAll()
+	            	.antMatchers(HttpMethod.DELETE,"/hatcher/remove/**")
+	            		.permitAll()
 	                .antMatchers("/hatcher/profile/registerUser")
 	                    .hasAnyRole("ADMIN")
 	                 .antMatchers("/hatcher/profile")
@@ -59,8 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                	.hasAnyRole("ADMIN")
 	                .antMatchers("/hatcher/profile/user/course/edit")
 	                	.hasAnyRole("ADMIN")
-	                .antMatchers(HttpMethod.POST, "/api/usuarios/**")
-	                    .permitAll()
+
 	                .anyRequest().authenticated()
 	            .and()
 	                .sessionManagement()
