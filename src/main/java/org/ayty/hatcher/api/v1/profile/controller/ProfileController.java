@@ -28,12 +28,10 @@ public class ProfileController {
 	public Profile getProfile(@PathVariable("id") long id) throws NotFoundException {
 		return findService.findById(id);
 	}
-	
 	@PutMapping("/{id}")
 	public Profile updateProfile(@PathVariable("id") long id,@RequestBody Profile profile) throws NotFoundException{	
 		return updateService.updateProfile(id, profile);
 	}
-	
 	@DeleteMapping("/{id}")
 	public void deleteProfile(@PathVariable("id") long id) {
 		deleteService.deleteProfile(id);

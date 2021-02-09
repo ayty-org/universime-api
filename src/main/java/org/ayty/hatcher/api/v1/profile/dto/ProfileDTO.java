@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class ProfileDTO {
-	@NotBlank()
-	private long id;
+	
 	//private Course course;
 	@NotBlank(message = "Campo deve ter no minimo 10")
 	@Size(min=10,max=1000)
