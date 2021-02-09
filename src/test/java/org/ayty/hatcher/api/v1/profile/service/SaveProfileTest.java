@@ -24,13 +24,13 @@ public class SaveProfileTest {
 	
 	@Test
 	public void saveProfileWithIdEquals3() {
-		Profile testeVar = new Profile(3L,"Ola, meu nome é tchau");
+		Profile testeVar = new Profile(3L,"Ola, algo sobre mim");
 		when(repo.findById(3L)).thenReturn(Optional.of(testeVar));
 		when(repo.save(any(Profile.class))).thenReturn(testeVar);
 		
 		Profile testing = service.saveProfile(testeVar);
 		
-		Assertions.assertEquals("Ola, meu nome é tchau", testing.getAbout());
+		Assertions.assertEquals("Ola, algo sobre mim", testing.getAbout());
 		verify(repo,times(1)).findById(any(Long.class));
 		verify(repo,times(1)).save(any(Profile.class));
 		
