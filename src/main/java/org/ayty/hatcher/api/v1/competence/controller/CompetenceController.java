@@ -2,6 +2,8 @@ package org.ayty.hatcher.api.v1.competence.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.ayty.hatcher.api.v1.competence.dto.CompetenceDTO;
 import org.ayty.hatcher.api.v1.competence.model.Competence;
 import org.ayty.hatcher.api.v1.competence.service.CompetenceService;
@@ -38,13 +40,13 @@ public class CompetenceController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Competence save(@RequestBody CompetenceDTO competenceDto) {
+	public Competence save(@Valid @RequestBody CompetenceDTO competenceDto) {
 		return service.save(competenceDto);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/{id}")
-	public Competence edit(@PathVariable Integer id, @RequestBody CompetenceDTO competenceDto) {
+	public Competence edit(@PathVariable Integer id, @Valid @RequestBody CompetenceDTO competenceDto) {
 		return service.edit(id, competenceDto);
 	}
 	

@@ -1,9 +1,9 @@
 package org.ayty.hatcher.api.v1.competence.service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.ayty.hatcher.api.v1.competence.dto.CompetenceDTO;
+import org.ayty.hatcher.api.v1.competence.exception.CompetenceNotFound;
 import org.ayty.hatcher.api.v1.competence.jpa.CompetenceRepository;
 import org.ayty.hatcher.api.v1.competence.model.Competence;
 import org.ayty.hatcher.api.v1.competence.model.Type;
@@ -21,13 +21,7 @@ public class CompetenceService {
 	}
 
 	public Competence save(CompetenceDTO competenceDto) {
-		Competence competence = Competence
-				.builder()
-				.name(competenceDto.getName())
-				.description(competenceDto.getDescription())
-				.type(Type.valueOf(competenceDto.getType().toUpperCase()))
-				.build();
-		
+		Competence competence = CompetenceDTO.toCompetence(competenceDto);
 		return repository.save(competence);
 	}
 
@@ -38,7 +32,7 @@ public class CompetenceService {
 	public Competence getById(Integer id) {
 		
 		Competence competence = repository.findById(id)
-				.orElseThrow(() -> new NoSuchElementException("Competência não encontrada"));
+				.orElseThrow(() -> new CompetenceNotFound());
 		
 		return competence;
 	}
@@ -51,7 +45,7 @@ public class CompetenceService {
 						c.setName(competenceDto.getName());
 						c.setType(Type.valueOf(competenceDto.getType().toUpperCase()));
 						return c;
-					}).orElseThrow(() -> new NoSuchElementException("Competência não encontrada"));
+					}).orElseThrow(() -> new CompetenceNotFound());
 		
 		return repository.save(competence);
 	}

@@ -25,15 +25,16 @@ public class Competence {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@NotEmpty(message="O campo nome não pode estar vazio.")
-	@Size(min=10, max=200, message="O nome deve ter entre 10 e 200 caracteres.")
+	@NotEmpty(message="O campo nome não pode estar vazio")
+	@Size(min=10, max=200, message="O nome deve ter entre 10 e 200 caracteres")
 	private String name;
 	
-	@NotEmpty(message="O campo descrição não pode estar vazio.")
-	@Size(min=10, max=1000, message="A descrição deve ter entre 10 e 1000 caracteres.")
+	@NotEmpty(message="O campo descrição não pode estar vazio")
+	@Size(min=10, max=1000, message="A descrição deve ter entre 10 e 1000 caracteres")
 	private String description;
 	
 	@Enumerated(EnumType.STRING)
+	@NotEmpty(message="O campo tipo não pode estar vazio")
 	private Type type;
 	
 	//falta o relacionamento com a entidade Projeto
