@@ -26,7 +26,7 @@ public class RegisterUserDTO {
 	
 	private String image;
 	
-	private String perfil;
+	private String profile;
 	
 	private boolean admin;
 	

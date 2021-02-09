@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import org.ayty.hatcher.api.v1.user.dto.OutRegisterDTO;
 import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
+import org.ayty.hatcher.api.v1.user.entity.Profile;
 import org.ayty.hatcher.api.v1.user.entity.User;
 import org.ayty.hatcher.api.v1.user.exception.InvalidData;
 import org.ayty.hatcher.api.v1.user.exception.UserAlreadyExists;
@@ -44,7 +45,7 @@ public class RegisterUserImpl implements RegisterUser {
 				.email(user.getEmail())
 				.fullName(user.getFullName())
 				.image(user.getImage())
-				.perfil(user.getPerfil())
+				.profile(checkProfile(user.getProfile()))
 				.admin(admin)
 				.build());
 		
@@ -58,6 +59,18 @@ public class RegisterUserImpl implements RegisterUser {
 		else {
 			throw new InvalidData();
 		}
+	}
+	public Profile checkProfile(String OptionProfile) {
+		
+		Profile profile;
+		
+		if(OptionProfile.equalsIgnoreCase("ALUNO")) {
+			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
+		}else{
+			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
+		}
+		
+		return profile;
 	}
 }
 		

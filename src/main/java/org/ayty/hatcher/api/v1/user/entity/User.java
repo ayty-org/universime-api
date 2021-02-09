@@ -2,6 +2,7 @@ package org.ayty.hatcher.api.v1.user.entity;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class User implements Serializable{
 	
 	private String image;
 	
-	private String perfil;
+	private Profile profile;
 	
 	private boolean admin;
 	
