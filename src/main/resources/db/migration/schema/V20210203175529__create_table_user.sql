@@ -8,7 +8,7 @@ Create table tb_user(
 	full_name varchar(255) not null,
 	image varchar (255),
 	admin BOOLEAN,
-	perfil varchar(255)
+	profile varchar(255)
 	
 	
 );	

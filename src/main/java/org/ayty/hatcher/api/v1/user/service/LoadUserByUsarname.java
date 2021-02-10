@@ -3,6 +3,7 @@ package org.ayty.hatcher.api.v1.user.service;
 
 
 import org.ayty.hatcher.api.v1.user.entity.User;
+import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
 import org.ayty.hatcher.api.v1.user.exception.UsernameNotFoundException;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,7 @@ public class LoadUserByUsarname implements UserDetailsService{
 			
 		User user = userBD.findByLogin(login)
 				.orElseThrow(() -> 
-				new UsernameNotFoundException());
+				new IncorrectUserOrPassword());
 		
 		
 		String[] roles = user.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};

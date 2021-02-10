@@ -1,5 +1,7 @@
 package org.ayty.hatcher.api.v1.user.dto;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -26,9 +28,10 @@ public class RegisterUserDTO {
 	
 	private String image;
 	
-	private String profile;
-	
 	private boolean admin;
+	
+	@Enumerated(EnumType.STRING)
+	private String profile;
 	
 	
 

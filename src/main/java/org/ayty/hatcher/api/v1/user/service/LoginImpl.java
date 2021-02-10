@@ -2,8 +2,11 @@ package org.ayty.hatcher.api.v1.user.service;
 
 
 import org.ayty.hatcher.api.v1.user.entity.User;
+
 import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
 import org.ayty.hatcher.api.v1.user.exception.LoginNotFound;
+import org.ayty.hatcher.api.v1.user.exception.UserDoesNotExist;
+import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ public class LoginImpl implements Login {
 	
 	private final LoadUserByUsarname load;
 	
+	private final UserRepository userBD;
+	
 	
 	
 	public UserDetails authenticate( User user ){
@@ -28,13 +33,21 @@ public class LoginImpl implements Login {
         if(userDetails.getUsername()== null ){
         	throw new LoginNotFound();
         }
+        User usuario = userBD.findByLogin(user.getLogin())
+        		.orElseThrow(() -> 
+        		new UserDoesNotExist());
+      
+        
 
-        boolean PasswordsMatch = encoder.matches(user.getPassword(),userDetails.getPassword() );
+        boolean PasswordsMatch = encoder.matches(user.getPassword(),userDetails.getPassword());
 
         if(PasswordsMatch){
             return userDetails;
         }
-        throw new IncorrectUserOrPassword();
+        else {
+            throw new IncorrectUserOrPassword();
+
+        }
     }
 	
 	

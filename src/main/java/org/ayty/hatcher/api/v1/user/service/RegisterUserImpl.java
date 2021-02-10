@@ -69,6 +69,11 @@ public class RegisterUserImpl implements RegisterUser {
 		}else{
 			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
 		}
+		if(OptionProfile.equalsIgnoreCase("PROFESSOR")) {
+			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
+		}else{
+			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
+		}
 		
 		return profile;
 	}

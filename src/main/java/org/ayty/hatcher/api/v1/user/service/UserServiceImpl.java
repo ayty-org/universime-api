@@ -9,9 +9,10 @@ import javax.transaction.Transactional;
 
 
 
+
 import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
 import org.ayty.hatcher.api.v1.user.entity.User;
-import org.ayty.hatcher.api.v1.user.exception.InvalidPasswordException;
+import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserDetailsService {
 	            return userDetails;
 	        }
 
-	        throw new InvalidPasswordException();
+	        throw new IncorrectUserOrPassword();
 	    }
 
 	@Override

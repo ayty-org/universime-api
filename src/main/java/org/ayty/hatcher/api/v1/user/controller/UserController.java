@@ -2,6 +2,7 @@ package org.ayty.hatcher.api.v1.user.controller;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.ayty.hatcher.api.v1.security.JwtService;
@@ -70,9 +71,9 @@ public class UserController {
 		
 	}
 	
-	@PostMapping("/Authenticate")
+	@PostMapping("/auth")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-    public TokenDTO authenticate(  @Valid  @RequestBody LoginDTO credenciais){
+    public TokenDTO authenticate(@Valid  @RequestBody LoginDTO credenciais){
         try{
             User user = User.builder().login(credenciais.getLogin()).password(credenciais.getPassword())
                     .build();				
@@ -83,9 +84,7 @@ public class UserController {
         } catch (IncorrectUserOrPassword e){
             throw new IncorrectUserOrPassword();
         }
-        catch(UsernameNotFoundException e) {
-        	throw new UsernameNotFoundException();
-        }
+        
         catch(LoginNotFound e) {
         	throw new LoginNotFound();
         }
