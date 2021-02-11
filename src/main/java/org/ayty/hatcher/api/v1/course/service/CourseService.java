@@ -1,6 +1,7 @@
 package org.ayty.hatcher.api.v1.course.service;
 
 
+import lombok.RequiredArgsConstructor;
 import org.ayty.hatcher.api.v1.course.dto.Course;
 import org.ayty.hatcher.api.v1.course.exception.ObjectNotFoundException;
 import org.ayty.hatcher.api.v1.course.jpa.CourseRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class CourseService {
 
@@ -33,11 +35,10 @@ public class CourseService {
         return repository.save(newObj);
     }
     public Course create(Course obj) {
-        obj.setId(null);
         return repository.save(obj);
     }
     public void delete(Long id) {
-        findById(id);
+        repository.existsById(id);
         repository.deleteById(id);
     }
 }

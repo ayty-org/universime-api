@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import java.io.Serializable;
 
 @Entity
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude={"name", "description"})
@@ -25,10 +26,8 @@ public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter private Long id;
-
-    @Getter @Setter private String name;
-
-    @Getter @Setter private String description;
+    private Long id;
+    private String name;
+    private String description;
 
 }
