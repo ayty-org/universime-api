@@ -34,9 +34,6 @@ public class Competence {
 	private String description;
 	
 	@Enumerated(EnumType.STRING)
-	@NotEmpty(message="O campo tipo não pode estar vazio")
 	private Type type;
-	
-	//falta o relacionamento com a entidade Projeto
 	
 }

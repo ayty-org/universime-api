@@ -2,9 +2,9 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/hatcher-db
     username: postgres
-    password: 123Mudar
+    password: 123
   flyway:
-    enabled: true
+    enabled: false
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update

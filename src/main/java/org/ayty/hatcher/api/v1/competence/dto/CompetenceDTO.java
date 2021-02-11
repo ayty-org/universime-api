@@ -6,9 +6,13 @@ import javax.validation.constraints.Size;
 import org.ayty.hatcher.api.v1.competence.model.Competence;
 import org.ayty.hatcher.api.v1.competence.model.Type;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompetenceDTO {
 	
 	@NotEmpty(message="O campo nome não pode estar vazio")
@@ -19,7 +23,6 @@ public class CompetenceDTO {
 	@Size(min=10, max=1000, message="A descrição deve ter entre 10 e 1000 caracteres")
 	private String description;
 	
-	@NotEmpty(message="O campo tipo não pode estar vazio")
 	private String type;
 	
 	public static Competence toCompetence(CompetenceDTO competenceDto) {
