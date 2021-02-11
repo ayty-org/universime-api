@@ -24,13 +24,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserDetailsService {
-	
 	@Autowired
 	private PasswordEncoder encoder;
-	
 	@Autowired
 	UserRepository userBD;
-	
 	
 	@Transactional
 	public User save(RegisterUserDTO user) {
@@ -50,32 +47,23 @@ public class UserServiceImpl implements UserDetailsService {
 	 public UserDetails authenticate( User user ){
 	        UserDetails userDetails = loadUserByUsername(user.getLogin());
 	        boolean PasswordsMatch= encoder.matches( user.getPassword(), userDetails.getPassword() );
-
 	        if(PasswordsMatch){
 	            return userDetails;
 	        }
-
 	        throw new IncorrectUserOrPassword();
 	    }
 
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-		User user = userBD.findByLogin(login)
-		.orElseThrow(() -> 
-		new UsernameNotFoundException("User not found in the database"));
+		User user = userBD.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+		String[] roles = user.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};		
 		
-		String[] roles = user.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};
 		
 		return org.springframework.security.core.userdetails.
 				User.builder()
 				.username(user.getLogin())
 				.password(user.getPassword())
 				.roles(roles)
-				
 				.build();
-				
 	}
-	
-	
-
 }

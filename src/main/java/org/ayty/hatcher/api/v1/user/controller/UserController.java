@@ -2,7 +2,6 @@ package org.ayty.hatcher.api.v1.user.controller;
 
 import java.util.List;
 
-
 import javax.validation.Valid;
 
 import org.ayty.hatcher.api.v1.security.JwtService;
@@ -22,7 +21,6 @@ import org.ayty.hatcher.api.v1.user.service.LoginImpl;
 import org.ayty.hatcher.api.v1.user.service.RegisterUserImpl;
 import org.ayty.hatcher.api.v1.user.service.RemoveUserImpl;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,28 +37,21 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/hatcher")
 public class UserController {
-
-
+	
 	private final LoginImpl loginImpl;
+	private final RegisterUserImpl registerImpl;	
+	private final PasswordEncoder passwordEncoder;	
+	private final JwtService jwtService;	
+	private final ListUsersImpl listUserService;	
+	private final RemoveUserImpl removeUserService;	
 	
-	private final RegisterUserImpl registerImpl;
-	
-	private final PasswordEncoder passwordEncoder;
-	
-	private final JwtService jwtService;
-	
-	private final ListUsersImpl listUserService;
-	
-	private final RemoveUserImpl removeUserService;
-	
-	
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/register")
-	public ResponseEntity<OutRegisterDTO> registerUser(@Valid  @RequestBody RegisterUserDTO user) {
+	public OutRegisterDTO registerUser(@Valid  @RequestBody RegisterUserDTO user) {
 		String EncryptedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(EncryptedPassword);
 		try {
-			
-			return new ResponseEntity<OutRegisterDTO>(registerImpl.save(user),HttpStatus.CREATED);
+			return registerImpl.save(user);
 		}
 		catch(UserAlreadyExists e) {
 			throw new UserAlreadyExists();
@@ -68,34 +59,28 @@ public class UserController {
 		catch(InvalidData e) {
 			throw new InvalidData();
 		}
-		
 	}
-	
 	@PostMapping("/auth")
 	@ResponseStatus(HttpStatus.ACCEPTED)
     public TokenDTO authenticate(@Valid  @RequestBody LoginDTO credenciais){
         try{
-            User user = User.builder().login(credenciais.getLogin()).password(credenciais.getPassword())
-                    .build();				
+            User user = User.builder().login(credenciais.getLogin()).password(credenciais.getPassword()).build();				
             UserDetails authenticateUser = loginImpl.authenticate(user);
             String token = jwtService.generateToken(credenciais);
-            return new TokenDTO(user.getLogin(), token);
-            
+            return new TokenDTO(user.getLogin(), token);   
         } catch (IncorrectUserOrPassword e){
             throw new IncorrectUserOrPassword();
         }
-        
         catch(LoginNotFound e) {
         	throw new LoginNotFound();
         }
-        
     }
+	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/listUsers", method = RequestMethod.GET)
-	public ResponseEntity<List<UserListDTO>> ListUsers() {
-
-		return new ResponseEntity<List<UserListDTO>>(listUserService.listOfRegisteredUsers(), HttpStatus.OK);
-
+	public List<UserListDTO> ListUsers() {
+		return listUserService.listOfRegisteredUsers();
 	}
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
 	public void removeUsers(@PathVariable  Long id) {
 		try {
@@ -103,8 +88,5 @@ public class UserController {
 		} catch (UsernameNotFoundException e) {
 			throw new InvalidData();
 		}
-
 	}
-	
-
 }

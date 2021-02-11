@@ -4,21 +4,23 @@ import org.ayty.hatcher.api.v1.user.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+
+@Getter
+@Setter
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OutRegisterDTO {
 	
 	private String login;
-	
 	private String email;
-	
 	private String fullName;
-	
 	private boolean admin;
 	
 	public OutRegisterDTO(User user) {
@@ -27,5 +29,4 @@ public class OutRegisterDTO {
 		this.fullName = user.getFullName();
 		this.admin = user.isAdmin();
 	}
-
 }

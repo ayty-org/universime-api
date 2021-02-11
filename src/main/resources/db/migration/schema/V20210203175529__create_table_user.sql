@@ -9,7 +9,9 @@ Create table tb_user(
 	image varchar (255),
 	admin BOOLEAN,
 	profile varchar(255)
-	
-	
+	/*
+	 alter table user_project add CONSTRAINT user_key foreign key (user_id) references tb_user;
+	 alter table user_project add CONSTRAINT user_project_key foreign key (user_project) references tb_user;
+	 */
 );	
 	

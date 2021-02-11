@@ -1,6 +1,5 @@
 package org.ayty.hatcher.api.v1.user.service;
 
-
 import org.ayty.hatcher.api.v1.user.entity.User;
 
 import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
@@ -17,40 +16,21 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class LoginImpl implements Login {
 
-	
 	private final PasswordEncoder encoder;
-	
-	
 	private final LoadUserByUsarname load;
-	
 	private final UserRepository userBD;
-	
-	
-	
-	public UserDetails authenticate( User user ){
-        UserDetails userDetails = load.loadUserByUsername(user.getLogin());
-       
-        if(userDetails.getUsername()== null ){
-        	throw new LoginNotFound();
-        }
-        User usuario = userBD.findByLogin(user.getLogin())
-        		.orElseThrow(() -> 
-        		new UserDoesNotExist());
-      
-        
 
-        boolean PasswordsMatch = encoder.matches(user.getPassword(),userDetails.getPassword());
-
-        if(PasswordsMatch){
-            return userDetails;
-        }
-        else {
-            throw new IncorrectUserOrPassword();
-
-        }
-    }
-	
-	
-	
-
+	public UserDetails authenticate(User user) {
+		UserDetails userDetails = load.loadUserByUsername(user.getLogin());
+		if (userDetails.getUsername() == null) {
+			throw new LoginNotFound();
+		}
+		User usuario = userBD.findByLogin(user.getLogin()).orElseThrow(() -> new UserDoesNotExist());
+		boolean PasswordsMatch = encoder.matches(user.getPassword(), userDetails.getPassword());
+		if (PasswordsMatch) {
+			return userDetails;
+		} else {
+			throw new IncorrectUserOrPassword();
+		}
+	}
 }

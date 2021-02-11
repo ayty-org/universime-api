@@ -25,22 +25,17 @@ public class JwtService {
 
 	@Value("${security.jwt.token.secret-key}")
 	private String secretKey;
-
 	@Value("${security.jwt.token.expire-length}")
 	private String expiration;
-
 	private final UserRepository userBD;
 
 	public String generateToken(LoginDTO user) {
-
 		long expString = Long.valueOf(expiration);
 		LocalDateTime expireLength = LocalDateTime.now().plusMinutes(expString);
 		Instant instant = expireLength.atZone(ZoneId.systemDefault()).toInstant();
 		Date date = Date.from(instant);
-
 		HashMap<String, Object> claim = new HashMap<String, Object>();
 		Optional<User> userAdmin = userBD.findByLogin(user.getLogin());
-
 		if (userAdmin.get().isAdmin() == true) {
 			claim.put("Roles", "ADMIN");
 			claim.put("Login", user.getLogin());
@@ -52,16 +47,13 @@ public class JwtService {
 			claim.put("Email", userAdmin.get().getEmail());
 			claim.put("Id", userAdmin.get().getId());
 		}
-
 		String token = Jwts.builder().setSubject(user.getLogin()).setClaims(claim)
 				.signWith(SignatureAlgorithm.HS512, secretKey).setExpiration(date).compact();
 		return token;
 	}
-
 	private Claims getClaims(String token) throws ExpiredJwtException {
 		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 	}
-
 	public boolean validToken(String token) {
 		try {
 			Claims claims = getClaims(token);
@@ -72,9 +64,7 @@ public class JwtService {
 			return false;
 		}
 	}
-
 	public String getUserLogin(String token) throws ExpiredJwtException {
 		return (String) getClaims(token).getSubject();
 	}
-
 }

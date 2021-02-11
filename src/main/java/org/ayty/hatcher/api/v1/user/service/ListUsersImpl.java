@@ -14,17 +14,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ListUsersImpl implements ListUsers{
-	
-	
 	private final UserRepository userBD;
 
 	@Override
 	public List<UserListDTO> listOfRegisteredUsers() {
 		List<User> listUser = userBD.findAll();
-		System.out.println(userBD.findAll().size());
 		List<UserListDTO> dto = listUser.stream().map(x -> new UserListDTO(x)).collect(Collectors.toList());
 		return dto;
 	}
-	
-
 }

@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class RemoveUserImpl implements RemoveUser {
-
 	private final UserRepository userBD;
 
 	@Override
@@ -22,7 +21,5 @@ public class RemoveUserImpl implements RemoveUser {
 		} else {
 			throw new InvalidData();
 		}
-
 	}
-
 }

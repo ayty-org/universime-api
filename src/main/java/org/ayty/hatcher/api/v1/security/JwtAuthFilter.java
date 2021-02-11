@@ -16,44 +16,28 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.RequiredArgsConstructor;
 
-
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-	
-	
-
 	private final JwtService jwtService;
-
-	
 	private final UserServiceImpl userService;
-	
-	
-	
-	   @Override
-	    protected void doFilterInternal(
-	            HttpServletRequest httpServletRequest,
-	            HttpServletResponse httpServletResponse,
-	            FilterChain filterChain) throws ServletException, IOException {
 
-	        String authorization = httpServletRequest.getHeader("Authorization");
+	@Override
+	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,FilterChain filterChain) throws ServletException, IOException {
 
-	        if( authorization != null && authorization.startsWith("Bearer")){
-	            String token = authorization.split(" ")[1];
-	            boolean isValid = jwtService.validToken(token);
-
-	            if(isValid){
-	                String userLogin = jwtService.getUserLogin(token);
-	                UserDetails userDetails = userService.loadUserByUsername(userLogin);
-	                UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-	                user.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-	                SecurityContextHolder.getContext().setAuthentication(user);
-	            }
-	        }
-
-	        filterChain.doFilter(httpServletRequest, httpServletResponse);
-
-	    }
-
-
+		String authorization = httpServletRequest.getHeader("Authorization");
+		if (authorization != null && authorization.startsWith("Bearer")) {
+			String token = authorization.split(" ")[1];
+			boolean isValid = jwtService.validToken(token);
+			if (isValid) {
+				String userLogin = jwtService.getUserLogin(token);
+				UserDetails userDetails = userService.loadUserByUsername(userLogin);
+				UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(userDetails, null,
+						userDetails.getAuthorities());
+				user.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+				SecurityContextHolder.getContext().setAuthentication(user);
+			}
+		}
+		filterChain.doFilter(httpServletRequest, httpServletResponse);
+	}
 }

@@ -17,27 +17,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class RegisterUserImpl implements RegisterUser {
-
-
+	
 	private final UserRepository userBD;
 	
-	
-	
 	@Transactional
-	public OutRegisterDTO save(RegisterUserDTO user) {
-		
+	public OutRegisterDTO save(RegisterUserDTO user) {	
 		boolean admin = false;
 		if(user.isAdmin() ==true) {
 			admin = true;
 		}
-
-
 		if(userBD.existsByLogin(user.getLogin())==true){
-			throw new UserAlreadyExists();
-			
+			throw new UserAlreadyExists();	
 		}
 		if(user.getLogin().matches("[a-zA-Z.]*")) {
-		
 		userBD.save(User.builder()
 				.id(null)
 				.login(user.getLogin())
@@ -61,9 +53,7 @@ public class RegisterUserImpl implements RegisterUser {
 		}
 	}
 	public Profile checkProfile(String OptionProfile) {
-		
 		Profile profile;
-		
 		if(OptionProfile.equalsIgnoreCase("ALUNO")) {
 			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
 		}else{
@@ -73,8 +63,7 @@ public class RegisterUserImpl implements RegisterUser {
 			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
 		}else{
 			profile = Enum.valueOf(Profile.class, OptionProfile.toUpperCase());
-		}
-		
+		}	
 		return profile;
 	}
 }

@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/hatcher-db
     username: postgres
-    password: ruan
+    password: 123mudar
   flyway:
     enabled: true
   jpa:

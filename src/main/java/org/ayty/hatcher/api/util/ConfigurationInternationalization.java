@@ -20,13 +20,10 @@ public class ConfigurationInternationalization {
         messageSource.setDefaultLocale(Locale.getDefault());
         return messageSource;
     }
-
     @Bean
     public LocalValidatorFactoryBean validatorFactoryBean(){
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
     }
-
-
 }

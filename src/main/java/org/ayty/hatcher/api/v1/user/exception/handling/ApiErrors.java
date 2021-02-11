@@ -13,19 +13,11 @@ public class ApiErrors {
 	public ApiErrors(List<String> msg) {
 		this.erros = msg;
 	}
-	
-
 	public ApiErrors() {
-		super();
-		
+		super();	
 	}
-
-
 	public List<String> getErros() {
 		return erros;
 	}
-
-	
-	
 
 }

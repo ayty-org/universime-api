@@ -112,6 +112,9 @@ local.properties
 # *.idea/hatcher-api.iml
 # *.idea/misc.xml
 # *.idea/sqldialects.xml
+# *.classpath
+# *.idea/hatcher-api.iml
+# *.project
 
 
 # CMake

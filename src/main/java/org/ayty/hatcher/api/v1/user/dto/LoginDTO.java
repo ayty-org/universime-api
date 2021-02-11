@@ -4,19 +4,20 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class LoginDTO {
-	
-	
 	@NotBlank(message = "{field.login.mandatory}")
 	private String login;
-	
 	@NotBlank(message = "{field.password.mandatory}")
 	private String password;
 
