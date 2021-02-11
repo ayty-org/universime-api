@@ -1,5 +1,6 @@
 package org.ayty.hatcher.api.v1.user.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,21 +29,11 @@ class RemoveUserImplTest {
 	@Test
 	void DeleteUsertest() {
 		
-		
-		when(repositorio.findById(1L)).thenReturn(Optional.empty());
-		
 		User usuario = new User(1L,"ruan", "ruan", "ruan@gmail.com.br", "ruan", "imagee 1", true, Profile.PROFESSOR);
+		when(repositorio.findById(1L)).thenReturn(Optional.of(usuario));
 		
+		assertDoesNotThrow(() -> RemoveUser.removeUser(1L));
 		
-		
-		
-		repositorio.save(usuario);
-		repositorio.delete(usuario);
-		
-
-		assertTrue(repositorio.findById(1L).isEmpty());
-
-	
 	}
 	
 	@Test

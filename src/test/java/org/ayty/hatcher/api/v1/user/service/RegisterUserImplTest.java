@@ -11,22 +11,13 @@ import org.junit.jupiter.api.Test;
 
 public class RegisterUserImplTest {
 	
-
-	
-	
 	private  UserRepository repositorio = mock(UserRepository.class);
-	
-	private RegisterUserImpl registro = new RegisterUserImpl(repositorio);
-	
-	
-	
+	private RegisterUserImpl registro = new RegisterUserImpl(repositorio);	
 	
 	@Test
 	final void saveUserTest() {
 
 		RegisterUserDTO user = new RegisterUserDTO("ruancruz", "ruansenha", "ruan@gmail.com", "ruan cruz soares", "imagee", false, "professor");
-		
-	
 		registro.save(user);
 		System.out.println(user);
 		
@@ -35,10 +26,7 @@ public class RegisterUserImplTest {
 		assertEquals(user.getFullName(), "ruan cruz soares");
 		assertEquals(user.isAdmin(), false);
 	
-		
-		
-		
-	
+
 	}
 	
 	@Test
