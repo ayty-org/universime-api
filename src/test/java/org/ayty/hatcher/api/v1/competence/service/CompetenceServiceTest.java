@@ -27,12 +27,6 @@ public class CompetenceServiceTest {
 	@Mock
 	private CompetenceRepository repository;
 	
-//	@Test
-//	public void hello() {
-//		List<Competence> competences = repository.findAll();
-//		assertTrue(competences.isEmpty());
-//	}
-	
 	@Test
 	void getAllCompetencesTest() {
 		Mockito.when(this.repository.findAll())
@@ -58,7 +52,7 @@ public class CompetenceServiceTest {
 	
 	@Test
 	void deleteCompetenceTest() {
-		Integer id = 1;
+		Long id = 1L;
 		service.delete(id);
 		Mockito.verify(repository).deleteById(id);
 	}
@@ -66,13 +60,13 @@ public class CompetenceServiceTest {
 	@Test
 	void getCompetenceById() {
 		
-		Mockito.when(this.repository.findById(Mockito.any(Integer.class)))
+		Mockito.when(this.repository.findById(Mockito.any(Long.class)))
 		.thenReturn(Optional.of(new Competence(
-				1, "Dev Front End", 
+				1L, "Dev Front End", 
 				"Dev Angular e Vue", 
 				Type.TECHNIC)));
 		
-		Optional<Competence> competenceOptional = Optional.of(this.service.getById(1));
+		Optional<Competence> competenceOptional = Optional.of(this.service.getById(1L));
 		
 		Competence competence = competenceOptional.get();
 		
@@ -82,13 +76,13 @@ public class CompetenceServiceTest {
 	@Test
 	void updateCompetenceTest() {
 		Competence competence = new Competence(
-				1, "Dev Front End", 
+				1L, "Dev Front End", 
 				"Dev Angular e Vue", 
 				Type.TECHNIC);
-		Mockito.when(this.repository.findById(Mockito.any(Integer.class)))
+		Mockito.when(this.repository.findById(Mockito.any(Long.class)))
 		.thenReturn(Optional.of(competence));
 		
-		this.service.edit(1, new CompetenceDTO(
+		this.service.edit(1L, new CompetenceDTO(
 				"Dev Front End", 
 				"Dev Angular e Vue", 
 				"TECHNIC"));

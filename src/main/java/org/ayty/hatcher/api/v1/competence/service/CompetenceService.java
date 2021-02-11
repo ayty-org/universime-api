@@ -25,11 +25,11 @@ public class CompetenceService {
 		return repository.save(competence);
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		repository.deleteById(id);
 	}
 
-	public Competence getById(Integer id) {
+	public Competence getById(Long id) {
 		
 		Competence competence = repository.findById(id)
 				.orElseThrow(() -> new CompetenceNotFound());
@@ -37,7 +37,7 @@ public class CompetenceService {
 		return competence;
 	}
 
-	public Competence edit(Integer id, CompetenceDTO competenceDto) {
+	public Competence edit(Long id, CompetenceDTO competenceDto) {
 		
 		Competence competence = (Competence) repository.findById(id)
 				.map(c -> {

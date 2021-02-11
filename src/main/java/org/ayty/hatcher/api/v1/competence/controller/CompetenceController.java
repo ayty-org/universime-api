@@ -34,7 +34,7 @@ public class CompetenceController {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/{id}")
-	public Competence getById(@PathVariable Integer id) {
+	public Competence getById(@PathVariable Long id) {
 		return service.getById(id);
 	}
 	
@@ -46,13 +46,13 @@ public class CompetenceController {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/{id}")
-	public Competence edit(@PathVariable Integer id, @Valid @RequestBody CompetenceDTO competenceDto) {
+	public Competence edit(@PathVariable Long id, @Valid @RequestBody CompetenceDTO competenceDto) {
 		return service.edit(id, competenceDto);
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id ) {
+	public void delete(@PathVariable Long id ) {
 		service.delete(id);
 	}
 }

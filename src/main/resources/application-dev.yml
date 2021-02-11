@@ -4,7 +4,7 @@ spring:
     username: postgres
     password: 123
   flyway:
-    enabled: false
+    enabled: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
