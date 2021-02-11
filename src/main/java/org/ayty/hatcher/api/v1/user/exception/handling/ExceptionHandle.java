@@ -25,7 +25,7 @@ public class ExceptionHandle {
 	@ExceptionHandler(IncorrectUserOrPassword.class)
 	public ResponseEntity<StandardError> IncorrectUserOrPasswordHandle(IncorrectUserOrPassword e,
 			HttpServletRequest request) {
-		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Access denied",
 				"Incorrec User Or Password", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
@@ -65,7 +65,7 @@ public class ExceptionHandle {
 
 	@ExceptionHandler(InvalidToken.class)
 	public ResponseEntity<StandardError> InvalidTokenHandle(InvalidToken e, HttpServletRequest request) {
-		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "UNAUTHORIZED",
 				"token is invalid", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
@@ -79,7 +79,7 @@ public class ExceptionHandle {
 				"Username Not Found Exception", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
-
+/*
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ApiErrors handleMethodNotValidException(MethodArgumentNotValidException ex) {
@@ -88,5 +88,5 @@ public class ExceptionHandle {
 
 		return new ApiErrors(errors);
 	}
-
+*/
 }

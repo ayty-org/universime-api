@@ -64,16 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  			.permitAll()
          	.antMatchers(HttpMethod.POST,"/hatcher/auth")
          	.permitAll()
-         		//.hasAnyRole("USER,ADMIN")
          	.antMatchers(HttpMethod.GET,"/hatcher/listUsers")
-         		//.hasAnyRole("USER,ADMIN")
          		.permitAll()
          	.antMatchers(HttpMethod.POST,"/hatcher/register")
          		.permitAll()
-         	//.hasAnyRole("ADMIN")
-         	.antMatchers(HttpMethod.DELETE,"/hatcher/remove/**")
+           	.antMatchers(HttpMethod.DELETE,"/hatcher/remove/**")
          		.permitAll()
-         	//.hasAnyRole("USER,ADMIN")
              .anyRequest().authenticated()
          .and()
              .sessionManagement()
@@ -82,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .addFilterBefore( jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 		 
 	 }
-	 private void ant(HttpSecurity http) throws Exception{
+	 private void HasRole(HttpSecurity http) throws Exception{
 		 http
          .cors().and().csrf().disable()
          .authorizeRequests()
@@ -106,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .addFilterBefore( jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 		 
 	 }
-	 
+	 /*
 	    @Bean
 	    public CorsFilter corsFilter() {
 	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -122,4 +118,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        source.registerCorsConfiguration("/**", config);
 	        return new CorsFilter(source);
 	    }
+	    */
 }

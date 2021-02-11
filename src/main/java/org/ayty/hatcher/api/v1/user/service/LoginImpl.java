@@ -22,9 +22,11 @@ public class LoginImpl implements Login {
 
 	public UserDetails authenticate(User user) {
 		UserDetails userDetails = load.loadUserByUsername(user.getLogin());
+		
 		if (userDetails.getUsername() == null) {
 			throw new LoginNotFound();
 		}
+		
 		User usuario = userBD.findByLogin(user.getLogin()).orElseThrow(() -> new UserDoesNotExist());
 		boolean PasswordsMatch = encoder.matches(user.getPassword(), userDetails.getPassword());
 		if (PasswordsMatch) {

@@ -23,6 +23,7 @@ import org.ayty.hatcher.api.v1.user.service.RemoveUserImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,7 @@ public class UserController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/register")
+	@CrossOrigin("*")
 	public OutRegisterDTO registerUser(@Valid  @RequestBody RegisterUserDTO user) {
 		String EncryptedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(EncryptedPassword);
@@ -60,8 +62,10 @@ public class UserController {
 			throw new InvalidData();
 		}
 	}
+	
 	@PostMapping("/auth")
 	@ResponseStatus(HttpStatus.ACCEPTED)
+	@CrossOrigin("*")
     public TokenDTO authenticate(@Valid  @RequestBody LoginDTO credenciais){
         try{
             User user = User.builder().login(credenciais.getLogin()).password(credenciais.getPassword()).build();				
@@ -77,11 +81,13 @@ public class UserController {
     }
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/listUsers", method = RequestMethod.GET)
+	@CrossOrigin("*")
 	public List<UserListDTO> ListUsers() {
 		return listUserService.listOfRegisteredUsers();
 	}
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
+	@CrossOrigin("*")
 	public void removeUsers(@PathVariable  Long id) {
 		try {
 			removeUserService.removeUser(id);
