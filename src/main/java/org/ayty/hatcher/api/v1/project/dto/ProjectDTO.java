@@ -9,11 +9,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
-@EqualsAndHashCode
 @Builder
 public class ProjectDTO implements Serializable {
     private static final long serialVersionUID = 1L;
