@@ -1,6 +1,5 @@
 package org.ayty.hatcher.api.v1.project.controller;
 
-import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ayty.hatcher.api.v1.project.dto.ProjectDTO;

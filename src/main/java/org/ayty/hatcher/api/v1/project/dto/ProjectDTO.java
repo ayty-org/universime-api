@@ -5,7 +5,7 @@ import org.ayty.hatcher.api.v1.project.model.Project;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,11 +34,11 @@ public class ProjectDTO implements Serializable {
 
     @NotEmpty
     @NonNull
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotEmpty
     @NonNull
-    private Date endDate;
+    private LocalDate endDate;
 
     public static ProjectDTO from(Project project) {
         return ProjectDTO.builder()

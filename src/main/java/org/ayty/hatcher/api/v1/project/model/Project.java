@@ -6,15 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.ayty.hatcher.api.v1.project.dto.ProjectDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,13 +42,22 @@ public class Project implements Serializable {
 
     @NotNull
     @NotEmpty
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
     @NotEmpty
-    private Date endDate;
+    private LocalDate endDate;
 
+//    @ManyToMany
+//    @JoinTable(
+//          name = "project_coordenator",
+//          joinColumns = @JoinColumn(name = "project_id"),
+//          inverseJoinColumns = @JoinColumn(name = "coordenator_id")
+//    )
 //    private List<User> coordenators;
+
+//    @ManyToMany(mappedBy = "competences")
+//    private List<Competence> competences;
 
     public static Project to(ProjectDTO projectDTO) {
         return Project.builder()

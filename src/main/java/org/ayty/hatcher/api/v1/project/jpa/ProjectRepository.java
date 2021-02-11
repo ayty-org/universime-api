@@ -1,4 +1,4 @@
-package org.ayty.hatcher.api.v1.project.repository;
+package org.ayty.hatcher.api.v1.project.jpa;
 
 import org.ayty.hatcher.api.v1.project.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
