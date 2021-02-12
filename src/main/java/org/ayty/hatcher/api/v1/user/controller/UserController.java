@@ -16,6 +16,8 @@ import org.ayty.hatcher.api.v1.user.exception.InvalidData;
 import org.ayty.hatcher.api.v1.user.exception.LoginNotFound;
 import org.ayty.hatcher.api.v1.user.exception.UserAlreadyExists;
 import org.ayty.hatcher.api.v1.user.exception.UsernameNotFoundException;
+import org.ayty.hatcher.api.v1.user.service.FetchData;
+import org.ayty.hatcher.api.v1.user.service.FetchDataImpl;
 import org.ayty.hatcher.api.v1.user.service.ListUsersImpl;
 import org.ayty.hatcher.api.v1.user.service.LoginImpl;
 import org.ayty.hatcher.api.v1.user.service.RegisterUserImpl;
@@ -46,13 +48,16 @@ public class UserController {
 	private final ListUsersImpl listUserService;	
 	private final RemoveUserImpl removeUserService;	
 	
+	private final FetchDataImpl fetch;
+	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/register")
 	@CrossOrigin("*")
 	public OutRegisterDTO registerUser(@Valid  @RequestBody RegisterUserDTO user) {
-		String EncryptedPassword = passwordEncoder.encode(user.getPassword());
-		user.setPassword(EncryptedPassword);
+		
 		try {
+			String EncryptedPassword = passwordEncoder.encode(user.getPassword());
+			user.setPassword(EncryptedPassword);
 			return registerImpl.save(user);
 		}
 		catch(UserAlreadyExists e) {
@@ -68,10 +73,10 @@ public class UserController {
 	@CrossOrigin("*")
     public TokenDTO authenticate(@Valid  @RequestBody LoginDTO credenciais){
         try{
-            User user = User.builder().login(credenciais.getLogin()).password(credenciais.getPassword()).build();				
-            UserDetails authenticateUser = loginImpl.authenticate(user);
+            User user = fetch.fetchData(credenciais);
             String token = jwtService.generateToken(credenciais);
             return new TokenDTO(user.getLogin(), token);   
+            
         } catch (IncorrectUserOrPassword e){
             throw new IncorrectUserOrPassword();
         }
@@ -85,6 +90,7 @@ public class UserController {
 	public List<UserListDTO> ListUsers() {
 		return listUserService.listOfRegisteredUsers();
 	}
+	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
 	@CrossOrigin("*")

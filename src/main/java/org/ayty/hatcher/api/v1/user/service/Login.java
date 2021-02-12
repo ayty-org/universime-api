@@ -7,4 +7,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface Login {
 	
 	UserDetails authenticate( User user );
+	
 }

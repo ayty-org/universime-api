@@ -2,10 +2,9 @@ package org.ayty.hatcher.api.v1.user.service;
 
 import java.util.Optional;
 import org.ayty.hatcher.api.v1.user.entity.User;
-import org.ayty.hatcher.api.v1.user.exception.InvalidData;
+import org.ayty.hatcher.api.v1.user.exception.LoginNotFound;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
 import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -19,7 +18,7 @@ public class RemoveUserImpl implements RemoveUser {
 		if (user.isPresent()) {
 			userBD.delete(user.get());
 		} else {
-			throw new InvalidData();
+			throw new LoginNotFound();
 		}
 	}
 }

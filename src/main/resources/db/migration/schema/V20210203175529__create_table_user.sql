@@ -7,7 +7,6 @@ Create table tb_user(
 	email varchar (255) not null,
 	full_name varchar(255) not null,
 	image varchar (255),
-	admin BOOLEAN,
 	profile varchar(255)
 	
 	

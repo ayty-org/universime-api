@@ -21,12 +21,10 @@ public class OutRegisterDTO {
 	private String login;
 	private String email;
 	private String fullName;
-	private boolean admin;
 	
 	public OutRegisterDTO(User user) {
 		this.login = user.getLogin();
 		this.email = user.getEmail();
 		this.fullName = user.getFullName();
-		this.admin = user.isAdmin();
 	}
 }

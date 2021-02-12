@@ -21,12 +21,13 @@ class LoadUserByUsarnameTest {
 	@Autowired
 	private UserRepository repositorio = mock(UserRepository.class);
 	
+	
 	private LoadUserByUsarname load = new LoadUserByUsarname(repositorio);
 	
 	
 	@Test
 	void UserAdminRolestest() {
-		User usuario = new User(2L,"vito", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2", false, Profile.ALUNO);
+		User usuario = new User(2L,"vito", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2",Profile.ALUNO);
 
 		when(repositorio.findByLogin("vito")).thenReturn(Optional.of(usuario));
 		
@@ -40,21 +41,7 @@ class LoadUserByUsarnameTest {
 		
 		
 	}
-	@Test
-	void UserRolesTests() {
-		User usuario2 = new User(2L,"vito", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2", true, Profile.ALUNO);
 
-		when(repositorio.findByLogin("vito")).thenReturn(Optional.of(usuario2));
-		
-		UserDetails userD = load.loadUserByUsername("vito");
-
-		
-		assertEquals("[ROLE_ADMIN, ROLE_USER]", userD.getAuthorities().toString());
-		
-		
-		
-		
-	}
 	
 	
 	@Test

@@ -26,7 +26,7 @@ public class ExceptionHandle {
 	public ResponseEntity<StandardError> IncorrectUserOrPasswordHandle(IncorrectUserOrPassword e,
 			HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Access denied",
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Invalid",
 				"Incorrec User Or Password", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
@@ -34,7 +34,7 @@ public class ExceptionHandle {
 	@ExceptionHandler(LoginNotFound.class)
 	public ResponseEntity<StandardError> LoginNotFoundHandle(LoginNotFound e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Access denied",
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Not Found",
 				"Login Not Found", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
@@ -79,14 +79,5 @@ public class ExceptionHandle {
 				"Username Not Found Exception", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
-/*
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ApiErrors handleMethodNotValidException(MethodArgumentNotValidException ex) {
-		List<String> errors = ex.getBindingResult().getAllErrors().stream().map(erro -> erro.getDefaultMessage())
-				.collect(Collectors.toList());
 
-		return new ApiErrors(errors);
-	}
-*/
 }

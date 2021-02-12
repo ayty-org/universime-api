@@ -35,9 +35,9 @@ class ListUsersImplTest {
 		List<User> userList  = new ArrayList<User>();
 		
 		
-		User usuario = new User(1L,"ruan", "ruan", "ruan@gmail.com.br", "ruan", "imagee 1", true, Profile.PROFESSOR);
-		User usuario2 = new User(2L,"cruz", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2", false, Profile.ALUNO);
-		User usuario3 = new User(3L,"ruancruz", "ruansenha", "ruancruz@gmail.com", "ruan cruz soares", "imagee 3", false, Profile.ALUNO);
+		User usuario = new User(1L,"ruan", "ruan", "ruan@gmail.com.br", "ruan", "imagee 1",Profile.PROFESSOR);
+		User usuario2 = new User(2L,"cruz", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2",Profile.ALUNO);
+		User usuario3 = new User(3L,"ruancruz", "ruansenha", "ruancruz@gmail.com", "ruan cruz soares", "imagee 3",Profile.ALUNO);
 		userList.add(usuario);
 		userList.add(usuario2);
 		userList.add(usuario3);

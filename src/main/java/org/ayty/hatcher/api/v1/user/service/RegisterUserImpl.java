@@ -22,10 +22,7 @@ public class RegisterUserImpl implements RegisterUser {
 	
 	@Transactional
 	public OutRegisterDTO save(RegisterUserDTO user) {	
-		boolean admin = false;
-		if(user.isAdmin() ==true) {
-			admin = true;
-		}
+		
 		if(userBD.existsByLogin(user.getLogin())==true){
 			throw new UserAlreadyExists();	
 		}
@@ -38,14 +35,12 @@ public class RegisterUserImpl implements RegisterUser {
 				.fullName(user.getFullName())
 				.image(user.getImage())
 				.profile(checkProfile(user.getProfile()))
-				.admin(admin)
 				.build());
 		
 		return new OutRegisterDTO(User.builder()
 				.login(user.getLogin())
 				.email(user.getEmail())
 				.fullName(user.getFullName())
-				.admin(user.isAdmin())
 				.build());
 		}
 		else {

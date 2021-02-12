@@ -32,7 +32,6 @@ public class RegisterUserDTO {
 	@Length(min = 3 ,max = 255)
 	private String fullName;
 	private String image;
-	private boolean admin;
 	@Enumerated(EnumType.STRING)
 	private String profile;
 	

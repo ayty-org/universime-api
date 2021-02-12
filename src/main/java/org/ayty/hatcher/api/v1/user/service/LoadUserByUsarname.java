@@ -18,8 +18,8 @@ public class LoadUserByUsarname implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		User user = userBD.findByLogin(login).orElseThrow(() -> new IncorrectUserOrPassword());
-		String[] roles = user.isAdmin() ? new String[] { "ADMIN", "USER" } : new String[] { "USER" };
-		return org.springframework.security.core.userdetails.User.builder().username(user.getLogin())
-				.password(user.getPassword()).roles(roles).build();
+		return org.springframework.security.core.userdetails.
+				User.builder().username(user.getLogin())
+				.password(user.getPassword()).roles("USER").build();
 	}
 }

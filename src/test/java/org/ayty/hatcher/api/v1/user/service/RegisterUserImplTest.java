@@ -12,26 +12,28 @@ import org.junit.jupiter.api.Test;
 public class RegisterUserImplTest {
 	
 	private  UserRepository repositorio = mock(UserRepository.class);
-	private RegisterUserImpl registro = new RegisterUserImpl(repositorio);	
+	
+	
+	
+	private RegisterUserImpl registro = new RegisterUserImpl(repositorio);
 	
 	@Test
 	final void saveUserTest() {
 
-		RegisterUserDTO user = new RegisterUserDTO("ruancruz", "ruansenha", "ruan@gmail.com", "ruan cruz soares", "imagee", false, "professor");
+		RegisterUserDTO user = new RegisterUserDTO("ruan.cruz", "ruan", "ruan@gmail.com", "ruan cruz soares","url:abacapofdsjki", "ALUNO");
 		registro.save(user);
 		System.out.println(user);
 		
-		assertEquals(user.getLogin(), "ruancruz");
+		assertEquals(user.getLogin(), "ruan.cruz");
 		assertEquals(user.getEmail(), "ruan@gmail.com");
 		assertEquals(user.getFullName(), "ruan cruz soares");
-		assertEquals(user.isAdmin(), false);
 	
 
 	}
 	
 	@Test
 	void nameincorrectTest() {
-		RegisterUserDTO usuario = new RegisterUserDTO("login1452", "pass1452", "ruan@gmail.com", "ruan cruz soares", "imagee", false, "professor");
+		RegisterUserDTO usuario = new RegisterUserDTO("login1452", "pass1452", "ruan@gmail.com", "ruan cruz soares", "imagee","PROFESSOR");
 		System.out.println(usuario);
 		
 		assertThrows(InvalidData.class, () ->  registro.save(usuario)); 

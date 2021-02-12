@@ -59,12 +59,11 @@ public class User implements Serializable{
 	@Length(min = 3 ,max = 255)
 	private String fullName;
 	private String image;
-	private boolean admin;
 	@Enumerated(EnumType.STRING)
 	private Profile profile;
 	/*
 	@ManyToMany
-	@JoinTable(name = "user_project",joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_project"))
+	@JoinTable(name = "user_project",joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
 	List<Project> projects;
 	*/
 }
