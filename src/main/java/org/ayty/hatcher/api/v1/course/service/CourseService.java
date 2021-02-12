@@ -16,9 +16,9 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class CourseService {
+public final class CourseService {
 
-    private CourseRepository repository;
+    private final CourseRepository repository;
 
     public Course findById (Long id) {
         Optional<Course> obj = repository.findById(id);
