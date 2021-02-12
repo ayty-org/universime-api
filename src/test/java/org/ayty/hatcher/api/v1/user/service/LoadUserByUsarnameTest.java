@@ -49,20 +49,14 @@ class LoadUserByUsarnameTest {
 		UserDetails userD = load.loadUserByUsername("vito");
 
 		
-		assertEquals("[ROLE_ADMIN, ROLE_USER]", userD.getAuthorities().toString());
-		
-		
-		
+		assertEquals("[ROLE_ADMIN, ROLE_USER]", userD.getAuthorities().toString());	
 		
 	}
-	
 	
 	@Test
 	void UserNamenonexistent() {
 
 		assertThrows(IncorrectUserOrPassword.class,() -> load.loadUserByUsername("cleyson"));
 	}
-	
-
 
 }

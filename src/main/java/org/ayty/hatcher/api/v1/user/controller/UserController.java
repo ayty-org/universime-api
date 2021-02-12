@@ -85,6 +85,9 @@ public class UserController {
 	public List<UserListDTO> ListUsers() {
 		return listUserService.listOfRegisteredUsers();
 	}
+	
+	
+	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
 	@CrossOrigin("*")
