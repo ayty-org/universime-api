@@ -246,3 +246,7 @@ hs_err_pid*
 *.iml
 /.idea/
 /.idea/
+
+# file: ~/.gitignore_global
+.DS_Store
+.idea

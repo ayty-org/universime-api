@@ -25,7 +25,6 @@ import java.util.List;
 @RequestMapping("/courses")
 public final class CourseController {
 
-    @Autowired
     private final CourseService service;
 
     @GetMapping
