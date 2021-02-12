@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 public class CourseService {
 
-    @Autowired
     private CourseRepository repository;
 
     public Course findById (Long id) {
