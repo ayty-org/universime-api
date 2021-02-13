@@ -36,17 +36,14 @@ class CourseRepositoryTest {
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
-
-
     }
+
     @Test
     @DisplayName("Should save data")
     final void shouldPersist() {
 
         Course course = new Course(ID,COURSE_NAME,DESCRIPTION);
-
-        when(courseService.create(course)).thenReturn(course);
-        courseService.create(course);
+        this.courseRepository.save(course);
 
         verify(courseRepository, times(1)).save(course);
 
@@ -86,6 +83,5 @@ class CourseRepositoryTest {
         assertThat(course.getDescription()).isEqualTo("Desc2");
 
     }
-
 
 }
