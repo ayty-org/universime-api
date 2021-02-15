@@ -210,3 +210,8 @@ hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,vscode,eclipse
 /target/
+
+# Others
+#src/main/resources/application.yml
+#src/main/resources/application-dev.yml
+#src/main/resources/application-prod.yml

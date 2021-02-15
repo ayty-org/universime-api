@@ -7,10 +7,12 @@ import org.ayty.hatcher.api.v1.competence.model.Competence;
 import org.ayty.hatcher.api.v1.competence.model.Type;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompetenceDTO {
