@@ -42,7 +42,7 @@ class ListCourseServiceTest {
 
     @Test
     @DisplayName("Should show all courses pageable")
-    void shoulShouwAllCourses() throws ParseException {
+    void shouldShowAllCourses() throws ParseException {
         Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Direction.fromString("ASC"), "id"));
         when(this.listCourseService.findAll(pageable)).thenReturn(
                 new PageImpl<>(new ArrayList<>(Arrays.asList(

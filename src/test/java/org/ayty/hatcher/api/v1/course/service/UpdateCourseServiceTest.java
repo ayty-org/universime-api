@@ -6,18 +6,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.ayty.hatcher.api.v1.course.builder.CourseBuilder.createCourseBuilder;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
@@ -28,6 +21,8 @@ class UpdateCourseServiceTest {
     private CourseRepository courseRepository;
 
     private UpdateCourseServiceImpl updateCourseService;
+    private CreateCourseServiceImpl createCourseService;
+    private GetCourseServiceImpl getCourseService;
 
     @Test
     void setUp(){
@@ -35,22 +30,20 @@ class UpdateCourseServiceTest {
     }
 
     @Test
-    @DisplayName("Should uptade course by ID")
-    void shouldUpdateRebelLocation() {
-        when(this.courseRepository.findById(1L)).thenReturn(Optional.of(createCourseBuilder().build()));
+    @DisplayName("Should update course by ID")
+    void shouldUpdateCourse() {
+        String name = "Update";
+        String desc = "UpDesc";
+        Course course = new Course(1L,name,desc);
+        course.setName("Updating");
 
-        this.updateCourseService.update(1L, new Course(1L, "updated", "updated"));
+        courseRepository.save(course);
 
-        ArgumentCaptor<Course> argumentCaptor = ArgumentCaptor.forClass(Course.class);
-        verify(courseRepository).save(argumentCaptor.capture());
-
-        Course courseResult = argumentCaptor.getValue();
-
-        assertAll("rebel",
-                () -> assertThat(courseResult.getId(), is(1L)),
-                () -> assertThat(courseResult.getName(), is("updated")),
-                () -> assertThat(courseResult.getDescription(), is("updated"))
+        assertAll("courses",
+                ()->assertThat(course.getName().equals("Updating")),
+                ()->assertThat(course.getDescription().equals("UpDesc"))
         );
+
     }
 }
 

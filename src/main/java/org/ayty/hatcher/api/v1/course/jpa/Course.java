@@ -20,13 +20,13 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder(builderClassName = "Builder")
+@Entity
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;

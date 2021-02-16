@@ -35,7 +35,7 @@ class DeleteCourseServiceTest {
 
     @Test
     @DisplayName("Should find delete course by ID")
-    void shoulDeleteCourse (){
+    void shouldDeleteCourse (){
         when(courseRepository.existsById(1L)).thenReturn(true);
         deleteCourseService.delete(1L);
         verify(courseRepository).existsById(1L);

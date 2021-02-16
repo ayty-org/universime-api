@@ -14,7 +14,7 @@ public class UpdateCourseServiceImpl implements UpdateCourseService{
 
     @Override
     public void update(Long id, Course obj) {
-        Course course = this.courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Objeto não encontrado! Id: " + id));
+        Course course = this.courseRepository.findById(id).orElseThrow((CourseNotFoundException::new));
         course.setName(obj.getName());
         course.setDescription(obj.getDescription());
         this.courseRepository.save(course);
