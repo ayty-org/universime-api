@@ -1,36 +1,31 @@
 package org.ayty.hatcher.api.v1.user.controller;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
-import org.ayty.hatcher.api.v1.security.JwtService;
 import org.ayty.hatcher.api.v1.user.dto.LoginDTO;
 import org.ayty.hatcher.api.v1.user.dto.OutRegisterDTO;
 import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
 import org.ayty.hatcher.api.v1.user.dto.TokenDTO;
 import org.ayty.hatcher.api.v1.user.dto.UserListDTO;
-import org.ayty.hatcher.api.v1.user.entity.User;
-import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
-import org.ayty.hatcher.api.v1.user.exception.InvalidData;
-import org.ayty.hatcher.api.v1.user.exception.LoginNotFound;
-import org.ayty.hatcher.api.v1.user.exception.UserAlreadyExists;
-import org.ayty.hatcher.api.v1.user.exception.UsernameNotFoundException;
-import org.ayty.hatcher.api.v1.user.service.FetchData;
-import org.ayty.hatcher.api.v1.user.service.FetchDataImpl;
-import org.ayty.hatcher.api.v1.user.service.ListUsersImpl;
-import org.ayty.hatcher.api.v1.user.service.LoginImpl;
-import org.ayty.hatcher.api.v1.user.service.RegisterUserImpl;
-import org.ayty.hatcher.api.v1.user.service.RemoveUserImpl;
+import org.ayty.hatcher.api.v1.user.service.ListUsersServiceImpl;
+import org.ayty.hatcher.api.v1.user.service.RegisterUserServiceImpl;
+import org.ayty.hatcher.api.v1.user.service.RemoveUserServiceImpl;
+import org.ayty.hatcher.api.v1.user.service.ReturnsLoginAndTokenService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,67 +33,50 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/hatcher")
+@RequestMapping("/api/v1/hatcher")
+@CrossOrigin("*")
 public class UserController {
 	
-	private final LoginImpl loginImpl;
-	private final RegisterUserImpl registerImpl;	
-	private final PasswordEncoder passwordEncoder;	
-	private final JwtService jwtService;	
-	private final ListUsersImpl listUserService;	
-	private final RemoveUserImpl removeUserService;	
+	private final RegisterUserServiceImpl registerImpl;	
+	private final ListUsersServiceImpl listUserService;	
+	private final RemoveUserServiceImpl removeUserService;
+	private final ReturnsLoginAndTokenService authenticationReturn;
 	
-	private final FetchDataImpl fetch;
 	
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/register")
-	@CrossOrigin("*")
-	public OutRegisterDTO registerUser(@Valid  @RequestBody RegisterUserDTO user) {
+	@PostMapping(value = "/register",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public OutRegisterDTO registerUser(@Valid @RequestBody RegisterUserDTO user) {
+		return registerImpl.save(user);
 		
-		try {
-			String EncryptedPassword = passwordEncoder.encode(user.getPassword());
-			user.setPassword(EncryptedPassword);
-			return registerImpl.save(user);
-		}
-		catch(UserAlreadyExists e) {
-			throw new UserAlreadyExists();
-		}
-		catch(InvalidData e) {
-			throw new InvalidData();
-		}
 	}
 	
-	@PostMapping("/auth")
+	@PostMapping(value = "/auth",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	@CrossOrigin("*")
     public TokenDTO authenticate(@Valid  @RequestBody LoginDTO credenciais){
-        try{
-            User user = fetch.fetchData(credenciais);
-            String token = jwtService.generateToken(credenciais);
-            return new TokenDTO(user.getLogin(), token);   
-            
-        } catch (IncorrectUserOrPassword e){
-            throw new IncorrectUserOrPassword();
-        }
-        catch(LoginNotFound e) {
-        	throw new LoginNotFound();
-        }
+		return authenticationReturn.LoginAndToken(credenciais);
+        
     }
+	
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "/listUsers", method = RequestMethod.GET)
-	@CrossOrigin("*")
-	public List<UserListDTO> ListUsers() {
-		return listUserService.listOfRegisteredUsers();
+	@GetMapping(value = "/listUsers")
+	public Page<UserListDTO> listUsers(@RequestParam(value = "isPaged", defaultValue = "true") boolean isPaged,
+            @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+            @RequestParam(value = "ord", defaultValue = "id") String ord,
+            @RequestParam(value = "sort", defaultValue = "ASC") String sort) {
+        if (isPaged) {
+        	return UserListDTO.from(this.listUserService.listOfRegisteredUsers(PageRequest.of(
+        			pageNumber, pageSize, Sort.by(Sort.Direction.fromString(sort), ord))));
+        }
+        else {
+        	return UserListDTO.from(this.listUserService.listOfRegisteredUsers(Pageable.unpaged()));
+        }
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-	@CrossOrigin("*")
+	@DeleteMapping(value = "/remove/{id}")
 	public void removeUsers(@PathVariable  Long id) {
-		try {
-			removeUserService.removeUser(id);
-		} catch (UsernameNotFoundException e) {
-			throw new InvalidData();
-		}
+		removeUserService.removeUser(id);
+		
 	}
 }

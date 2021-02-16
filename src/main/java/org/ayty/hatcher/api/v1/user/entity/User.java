@@ -1,7 +1,6 @@
 package org.ayty.hatcher.api.v1.user.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,15 +9,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
 import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +33,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "tb_user",uniqueConstraints={@UniqueConstraint(columnNames={"login"})})
+@Table(name = "tb_user",uniqueConstraints={@UniqueConstraint(columnNames={"login","email"})})
 @Entity
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -50,22 +47,35 @@ public class User implements Serializable{
 	@NotBlank(message = "login field is mandatory")
 	private String login;
 	
-	@Column(nullable = false)
+	@Column(nullable = false,unique = true)
 	@NotBlank(message = "password field is mandatory")
 	private String password;
 	
 	@Email(message = "field email invalid")
+	@Column(unique = true)
 	private String email;
 	@Length(min = 3 ,max = 255)
-	private String fullName;
+	private String fullname;
 	private String image;
 	@Enumerated(EnumType.STRING)
 	private Profile profile;
+	
 	/*
 	@ManyToMany
 	@JoinTable(name = "user_project",joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
 	List<Project> projects;
 	*/
+	
+	public static User to(RegisterUserDTO dto) {
+		return User.builder()
+				.login(dto.getLogin())
+				.password(dto.getPassword())
+				.fullname(dto.getFullName())
+				.email(dto.getEmail())
+				.image(dto.getImage())
+				.profile(dto.getProfile())
+				.build();
+	}
 }
 
 

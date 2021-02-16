@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import org.ayty.hatcher.api.v1.user.entity.Profile;
 import org.ayty.hatcher.api.v1.user.entity.User;
-import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
+import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPasswordException;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ class LoadUserByUsarnameTest {
 	@Test
 	void UserNamenonexistent() {
 
-		assertThrows(IncorrectUserOrPassword.class,() -> load.loadUserByUsername("cleyson"));
+		assertThrows(IncorrectUserOrPasswordException.class,() -> load.loadUserByUsername("cleyson"));
 	}
 	
 
