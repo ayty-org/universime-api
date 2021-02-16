@@ -14,7 +14,7 @@ public class FindProjectByIdServiceImpl implements FindProjectByIdService {
 
     private final ProjectRepository projectRepository;
 
-    public Optional<Project> findById(Integer id) {
+    public Optional<Project> findById(Long id) {
         return Optional.ofNullable(projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Doesn't exist project with this id!")));
     }

@@ -36,7 +36,7 @@ public class FindProjectByIdServiceImplTest {
 
         Project project = ProjectBuilder.createProject();
 
-        when(this.projectRepository.findById(1))
+        when(this.projectRepository.findById(1L))
                 .thenReturn(Optional.of(project));
 
         assertEquals(project.getId(), findProjectByIdServiceImpl.findById(project.getId()).get().getId());
@@ -51,11 +51,11 @@ public class FindProjectByIdServiceImplTest {
     @DisplayName("findById returns an error when the project with certain id doesn't exist")
     void findById_ReturnAnError_WhenCertainIdDoesntExist() throws ParseException {
 
-        when(this.projectRepository.findById(ArgumentMatchers.anyInt()))
+        when(this.projectRepository.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.empty());
 
         assertThrows(
                 ProjectNotFoundException.class,
-                () -> findProjectByIdServiceImpl.findById(ArgumentMatchers.anyInt()).get());
+                () -> findProjectByIdServiceImpl.findById(ArgumentMatchers.anyLong()).get());
     }
 }

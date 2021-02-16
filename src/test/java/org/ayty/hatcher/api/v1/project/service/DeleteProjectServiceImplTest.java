@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -24,14 +25,20 @@ public class DeleteProjectServiceImplTest {
     @Mock
     private ProjectRepository projectRepository;
 
+    @BeforeEach
+    public void setUp() {
+        this.deleteProjectService = new DeleteProjectServiceImpl(this.projectRepository);
+    }
+
     @Test
     @DisplayName("delete removes a project with certain id when successful")
     void delete_RemoveProjectWithCertainId_WhenSuccessful() throws ParseException {
 
         Project project = ProjectBuilder.createProject();
-        projectRepository.save(project);
-        deleteProjectService.deleteById(1);
-        verify(projectRepository, times(1)).deleteById(anyInt());
+
+        when(projectRepository.findById(1L)).thenReturn(Optional.of(project));
+
+        Assertions.assertDoesNotThrow(() -> deleteProjectService.delete(1L));
     }
 
     @Test
@@ -39,9 +46,9 @@ public class DeleteProjectServiceImplTest {
     void delete_ReturnMonoError_WhenProjectDoesNotExist() {
 
         doThrow(new ProjectNotFoundException("Project not found!"))
-                .when(projectRepository).deleteById(anyInt());
+                .when(projectRepository).deleteById(anyLong());
 
         Assertions.assertThrows(ProjectNotFoundException.class,
-                () -> projectRepository.deleteById(anyInt()));
+                () -> projectRepository.deleteById(anyLong()));
     }
 }

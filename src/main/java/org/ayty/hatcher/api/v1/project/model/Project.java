@@ -1,9 +1,6 @@
 package org.ayty.hatcher.api.v1.project.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.ayty.hatcher.api.v1.project.dto.ProjectDTO;
 
 import javax.persistence.*;
@@ -15,7 +12,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,8 +23,9 @@ public class Project implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_generator")
+    @SequenceGenerator(name = "project_generator", sequenceName = "project_sequence", allocationSize = 1)
+    private Long id;
 
     @NotNull
     @NotEmpty
@@ -48,12 +48,7 @@ public class Project implements Serializable {
     @NotEmpty
     private LocalDate endDate;
 
-//    @ManyToMany
-//    @JoinTable(
-//          name = "project_coordenator",
-//          joinColumns = @JoinColumn(name = "project_id"),
-//          inverseJoinColumns = @JoinColumn(name = "coordenator_id")
-//    )
+//    @ManyToMany(mappedBy = "projects")
 //    private List<User> coordenators;
 
 //    @ManyToMany(mappedBy = "competences")

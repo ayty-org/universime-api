@@ -18,7 +18,7 @@ public class ProjectBuilder {
 
 
         return Project.builder()
-                .id(1)
+                .id(1L)
                 .name("Projeto Spring Boot")
                 .description("Projeto para construção de uma API Rest utilizando Spring Boot.")
                 .logo("images/logo.png")

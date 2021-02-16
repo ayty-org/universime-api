@@ -7,5 +7,5 @@ import java.util.Optional;
 @FunctionalInterface
 public interface FindProjectByIdService {
 
-    Optional<Project> findById(Integer id);
+    Optional<Project> findById(Long id);
 }

@@ -60,7 +60,7 @@ public class ProjectControllerTest {
 
         Project project = ProjectBuilder.createProject();
 
-        when(findProjectByIdService.findById(1))
+        when(findProjectByIdService.findById(1L))
                 .thenReturn(Optional.of(project));
 
         mockMvc.perform(get("/api/v1/projects/{id}", 1)
@@ -78,15 +78,15 @@ public class ProjectControllerTest {
     @Test
     public void find_ReturnError_WhenProjectDoesNotExist() throws Exception {
 
-        when(findProjectByIdService.findById(-1))
+        when(findProjectByIdService.findById(-1L))
                 .thenThrow(ProjectNotFoundException.class);
 
-        mockMvc.perform(get("/api/v1/projects/{id}", -1)
+        mockMvc.perform(get("/api/v1/projects/{id}", -1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 
-        verify(this.findProjectByIdService, times(1)).findById(-1);
+        verify(this.findProjectByIdService, times(1)).findById(-1L);
 
     }
 
@@ -119,7 +119,7 @@ public class ProjectControllerTest {
     @Test
     public void updateProject_WhenSuccessful() throws Exception {
 
-        mockMvc.perform(put("/api/v1/projects/{id}", 1)
+        mockMvc.perform(put("/api/v1/projects/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(getJson("UpdateProject.json")))
                 .andExpect(status().isNoContent());
@@ -128,11 +128,11 @@ public class ProjectControllerTest {
     @Test
     public void deleteAProject_WhenSuccessful() throws Exception {
 
-        mockMvc.perform(delete("/api/v1/projects/{id}", anyInt())
+        mockMvc.perform(delete("/api/v1/projects/{id}", anyLong())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
-        verify(deleteProjectService, times(1)).deleteById(anyInt());
+        verify(deleteProjectService, times(1)).delete(anyLong());
     }
 
     public static String getJson(String fileName) throws Exception {

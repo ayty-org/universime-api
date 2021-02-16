@@ -33,7 +33,7 @@ public class SaveProjectServiceImplTest {
     public void save_CreateNewProject_WhenSuccessful() throws ParseException {
 
         Project project = ProjectBuilder.createProject();
-        this.projectRepository.save(project);
+        this.saveProjectService.save(project);
 
         ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
         verify(projectRepository).save(captor.capture());

@@ -9,16 +9,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ProjectDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty
-    @NonNull
-    private Integer id;
+    private Long id;
 
     @NotEmpty
     @NonNull
