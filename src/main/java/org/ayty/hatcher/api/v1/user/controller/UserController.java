@@ -7,22 +7,28 @@ import org.ayty.hatcher.api.v1.user.dto.LoginDTO;
 import org.ayty.hatcher.api.v1.user.dto.OutRegisterDTO;
 import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
 import org.ayty.hatcher.api.v1.user.dto.TokenDTO;
+import org.ayty.hatcher.api.v1.user.dto.UpdateUserDTO;
 import org.ayty.hatcher.api.v1.user.dto.UserListDTO;
+import org.ayty.hatcher.api.v1.user.entity.User;
+import org.ayty.hatcher.api.v1.user.exception.InvalidDataException;
 import org.ayty.hatcher.api.v1.user.service.ListUsersServiceImpl;
 import org.ayty.hatcher.api.v1.user.service.RegisterUserServiceImpl;
 import org.ayty.hatcher.api.v1.user.service.RemoveUserServiceImpl;
 import org.ayty.hatcher.api.v1.user.service.ReturnsLoginAndTokenService;
+import org.ayty.hatcher.api.v1.user.service.UpdateUserServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +47,8 @@ public class UserController {
 	private final ListUsersServiceImpl listUserService;	
 	private final RemoveUserServiceImpl removeUserService;
 	private final ReturnsLoginAndTokenService authenticationReturn;
+	
+	private final UpdateUserServiceImpl updateUserService;
 	
 	
 	@ResponseStatus(HttpStatus.CREATED)
@@ -78,5 +86,14 @@ public class UserController {
 	public void removeUsers(@PathVariable  Long id) {
 		removeUserService.removeUser(id);
 		
+	}
+	
+	@PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public UpdateUserDTO updateUser( @PathVariable Long id, @RequestBody User user) {
+		try {
+			return updateUserService.updateUser(id, user);
+		} catch (UsernameNotFoundException e) {
+			throw new InvalidDataException();
+		}
 	}
 }
