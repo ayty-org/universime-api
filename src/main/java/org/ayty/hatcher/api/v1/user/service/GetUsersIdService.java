@@ -3,7 +3,7 @@ package org.ayty.hatcher.api.v1.user.service;
 import org.ayty.hatcher.api.v1.user.dto.UpdateUserDTO;
 
 @FunctionalInterface
-public interface ListUsersIdService {
+public interface GetUsersIdService {
 	
-	UpdateUserDTO listUsersId(Long id);
+	UpdateUserDTO getUsersId(Long id);
 }

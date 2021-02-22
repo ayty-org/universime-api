@@ -3,6 +3,7 @@ package org.ayty.hatcher.api.v1.user.controller;
 
 import javax.validation.Valid;
 
+
 import org.ayty.hatcher.api.v1.user.dto.LoginDTO;
 import org.ayty.hatcher.api.v1.user.dto.OutRegisterDTO;
 import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
@@ -11,7 +12,7 @@ import org.ayty.hatcher.api.v1.user.dto.UpdateUserDTO;
 import org.ayty.hatcher.api.v1.user.dto.UserListDTO;
 import org.ayty.hatcher.api.v1.user.entity.User;
 import org.ayty.hatcher.api.v1.user.exception.InvalidDataException;
-import org.ayty.hatcher.api.v1.user.service.ListUsersIdServiceImpl;
+import org.ayty.hatcher.api.v1.user.service.GetUsersIdServiceImpl;
 import org.ayty.hatcher.api.v1.user.service.ListUsersServiceImpl;
 import org.ayty.hatcher.api.v1.user.service.RegisterUserServiceImpl;
 import org.ayty.hatcher.api.v1.user.service.RemoveUserServiceImpl;
@@ -49,7 +50,7 @@ public class UserController {
 	private final RemoveUserServiceImpl removeUserService;
 	private final ReturnsLoginAndTokenService authenticationReturn;
 	private final UpdateUserServiceImpl updateUserService;
-	private final ListUsersIdServiceImpl listUsersId;
+	private final GetUsersIdServiceImpl getUserService;
 	
 	
 	@ResponseStatus(HttpStatus.CREATED)
@@ -98,8 +99,8 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping(value = "/listUsersId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public UpdateUserDTO listUsersId(@PathVariable Long id) {
-		return listUsersId.listUsersId(id);
+	@GetMapping(value = "/getById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public UpdateUserDTO getByUsersId(@PathVariable Long id) {
+		return getUserService.getUsersId(id);
 	}
 }

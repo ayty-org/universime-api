@@ -38,7 +38,6 @@ public class JwtService {
 		Date date = Date.from(instant);
 		HashMap<String, Object> claim = new HashMap<String, Object>();
 		Optional<User> userAdmin = userBD.findByLogin(user.getLogin());
-
 		claim.put("Login", user.getLogin());
 		claim.put("Email", userAdmin.get().getEmail());
 		claim.put("Id", userAdmin.get().getId());

@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          	.permitAll()
          	.antMatchers(HttpMethod.PUT,"/api/v1/hatcher/update/**")
          	.permitAll()
-         	.antMatchers(HttpMethod.GET,"/api/v1/hatcher/listUsersId/**")
+         	.antMatchers(HttpMethod.GET,"/api/v1/hatcher/getById/**")
          	.permitAll()
          	.antMatchers(HttpMethod.GET,"/api/v1/hatcher/listUsers")
          		.permitAll()

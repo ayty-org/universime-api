@@ -12,12 +12,12 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ListUsersIdServiceImpl implements ListUsersIdService{
-	private final UserRepository userBD;
+public class GetUsersIdServiceImpl implements GetUsersIdService{
+	private final UserRepository userDB;
 
 	@Override
-	public UpdateUserDTO listUsersId(Long id) {
-		Optional<User> user = userBD.findById(id);
+	public UpdateUserDTO getUsersId(Long id) {
+		Optional<User> user = userDB.findById(id);
 		if (user.isPresent()) {
 			
 			return new UpdateUserDTO(user.get());

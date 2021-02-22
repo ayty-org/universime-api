@@ -37,7 +37,7 @@ public class RegisterUserDTO {
 	@Email(message = "field.email.invalid")
 	private String email;
 	@Length(min = 3 ,max = 255)
-	private String fullName;
+	private String fullname;
 	private String image;
 	@Enumerated(EnumType.STRING)
 	private Profile profile;

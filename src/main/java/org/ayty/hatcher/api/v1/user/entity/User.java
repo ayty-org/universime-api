@@ -70,7 +70,7 @@ public class User implements Serializable{
 		return User.builder()
 				.login(dto.getLogin())
 				.password(dto.getPassword())
-				.fullname(dto.getFullName())
+				.fullname(dto.getFullname())
 				.email(dto.getEmail())
 				.image(dto.getImage())
 				.profile(dto.getProfile())

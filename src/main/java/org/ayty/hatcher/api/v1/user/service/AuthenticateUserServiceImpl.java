@@ -1,6 +1,5 @@
 package org.ayty.hatcher.api.v1.user.service;
 
-import org.ayty.hatcher.api.v1.user.dto.TokenDTO;
 import org.ayty.hatcher.api.v1.user.entity.User;
 import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPasswordException;
 import org.ayty.hatcher.api.v1.user.exception.LoginNotFoundException;
@@ -17,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticateUserServiceImpl implements AuthenticateUserService{
 
 	private final PasswordEncoder encoder;
-	private final UserRepository userBD;
+	private final UserRepository userDB;
 	private final LoadUserByUsarname load;
 
 	public UserDetails authenticate(User user) {
@@ -27,12 +26,14 @@ public class AuthenticateUserServiceImpl implements AuthenticateUserService{
 		if (userDetails.getUsername() == null) {
 			throw new LoginNotFoundException();
 		}
-		User usuario = userBD.findByLogin(user.getLogin()).orElseThrow(() -> new UserDoesNotExistException());
+		
+		User usuario = userDB.findByLogin(user.getLogin()).orElseThrow(() -> new UserDoesNotExistException());
 		boolean PasswordsMatch = encoder.matches(user.getPassword(), userDetails.getPassword());
 		
 		if (PasswordsMatch) {
 			return userDetails;
-		} else {
+		} 
+		else {
 			throw new IncorrectUserOrPasswordException();
 		}
 	}

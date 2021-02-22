@@ -16,15 +16,17 @@ import lombok.RequiredArgsConstructor;
 public class UpdateUserServiceImpl implements UpdateUserService{
 	
 	
-	private final UserRepository userBD;
+	private final UserRepository userDB;
 	
 	public UpdateUserDTO updateUser(Long id, User update) {
-		Optional<User> user = userBD.findById(id);
+		Optional<User> user = userDB.findById(id);
 		if (user.isPresent()) {
 			User userUpdate = user.get();
+			userUpdate.setLogin(update.getLogin());
 			userUpdate.setEmail(update.getEmail());
 			userUpdate.setFullname(update.getFullname());
 			userUpdate.setImage(update.getImage());
+			userDB.save(userUpdate);
 			return new UpdateUserDTO(user.get());
 		} else {
 			throw new InvalidDataException();

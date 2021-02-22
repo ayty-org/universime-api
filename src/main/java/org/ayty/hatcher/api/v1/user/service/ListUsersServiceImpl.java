@@ -12,11 +12,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ListUsersServiceImpl implements ListUsersService{
-	private final UserRepository userBD;
+	private final UserRepository userDB;
 
 	@Override
 	public Page<User> listOfRegisteredUsers(Pageable pageable) {
-		return userBD.findAll(pageable);
+		return userDB.findAll(pageable);
 	}
 
 	

@@ -9,13 +9,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class RemoveUserServiceImpl implements RemoveUserService {
-	private final UserRepository userBD;
+	private final UserRepository userDB;
 
 	@Override
 	public void removeUser(Long id) {
 		
-		if (userBD.existsById(id)==true) {
-			userBD.deleteById(id);
+		if (userDB.existsById(id)==true) {
+			userDB.deleteById(id);
 		}
 		else {
 			throw new UsernameNotFoundException();

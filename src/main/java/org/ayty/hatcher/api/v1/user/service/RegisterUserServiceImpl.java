@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class RegisterUserServiceImpl implements RegisterUserService {
 	
-	private final UserRepository userBD;
+	private final UserRepository userDB;
 	
 	private final PasswordEncoder passwordEncoder;	
 
@@ -26,20 +26,18 @@ public class RegisterUserServiceImpl implements RegisterUserService {
 	@Transactional
 	public OutRegisterDTO save(RegisterUserDTO user) {	
 		
-		if(userBD.existsByLogin(user.getLogin())==true){
+		if(userDB.existsByLogin(user.getLogin())==true){
 			throw new UserAlreadyExistsException();	
 		}
-		if(userBD.existsByEmail(user.getEmail())==true) {
+		if(userDB.existsByEmail(user.getEmail())==true) {
 			throw new UserAlreadyExistsException();
 		}
 		if(user.getLogin().matches("[a-zA-Z.]*")) {
 			String EncryptedPassword = passwordEncoder.encode(user.getPassword());
 			user.setPassword(EncryptedPassword);
 			User userImpl = User.to(user);
-			userBD.save(userImpl);
-		
-		
-		return new OutRegisterDTO(userImpl);
+			userDB.save(userImpl);
+			return new OutRegisterDTO(userImpl);
 		}
 		
 		else {
