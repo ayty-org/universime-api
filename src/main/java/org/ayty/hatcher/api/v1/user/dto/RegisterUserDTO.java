@@ -34,7 +34,6 @@ public class RegisterUserDTO {
 	private String login;	
 	@NotBlank(message = "field.password.mandatory")
 	private String password;
-	@Email(message = "field.email.invalid")
 	private String email;
 	@Length(min = 3 ,max = 255)
 	private String fullname;

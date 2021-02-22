@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.ayty.hatcher.api.v1.user.dto.OutRegisterDTO;
 import org.ayty.hatcher.api.v1.user.dto.RegisterUserDTO;
 import org.ayty.hatcher.api.v1.user.entity.User;
+import org.ayty.hatcher.api.v1.user.exception.EmailNotValidException;
 import org.ayty.hatcher.api.v1.user.exception.InvalidDataException;
 import org.ayty.hatcher.api.v1.user.exception.UserAlreadyExistsException;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
@@ -31,6 +32,9 @@ public class RegisterUserServiceImpl implements RegisterUserService {
 		}
 		if(userDB.existsByEmail(user.getEmail())==true) {
 			throw new UserAlreadyExistsException();
+		}
+		if(!user.getEmail().contains("@")) {
+			throw new EmailNotValidException();
 		}
 		if(user.getLogin().matches("[a-zA-Z.]*")) {
 			String EncryptedPassword = passwordEncoder.encode(user.getPassword());

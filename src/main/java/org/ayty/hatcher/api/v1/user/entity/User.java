@@ -51,7 +51,6 @@ public class User implements Serializable{
 	@NotBlank(message = "password field is mandatory")
 	private String password;
 	
-	@Email(message = "field email invalid")
 	@Column(unique = true)
 	private String email;
 	@Length(min = 3 ,max = 255)

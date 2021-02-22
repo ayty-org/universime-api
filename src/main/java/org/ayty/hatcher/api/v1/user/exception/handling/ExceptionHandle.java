@@ -2,6 +2,7 @@ package org.ayty.hatcher.api.v1.user.exception.handling;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.ayty.hatcher.api.v1.user.exception.EmailNotValidException;
 import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPasswordException;
 import org.ayty.hatcher.api.v1.user.exception.InvalidDataException;
 import org.ayty.hatcher.api.v1.user.exception.InvalidTokenException;
@@ -22,7 +23,7 @@ public class ExceptionHandle {
 			HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Invalid",
-				"Incorrec User Or Password", request.getRequestURI());
+				"Usuario ou senha Invalidos", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -30,7 +31,7 @@ public class ExceptionHandle {
 	public ResponseEntity<StandardError> loginNotFoundHandle(LoginNotFoundException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Not Found",
-				"Login Not Found", request.getRequestURI());
+				"Login não encontrado", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -38,7 +39,7 @@ public class ExceptionHandle {
 	public ResponseEntity<StandardError> userAlreadyExistHandle(UserAlreadyExistsException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Conflict",
-				"User Already Exists", request.getRequestURI());
+				"Usuario já existe", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -46,7 +47,7 @@ public class ExceptionHandle {
 	public ResponseEntity<StandardError> invalidDataHandle(InvalidDataException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Valid Data",
-				"Data is invalid", request.getRequestURI());
+				"Dados Invalidos", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -54,7 +55,7 @@ public class ExceptionHandle {
 	public ResponseEntity<StandardError> userDoesNotExistHandle(UserDoesNotExistException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "User Not found",
-				"User Does Not Exist", request.getRequestURI());
+				"Usuario não existe", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -62,7 +63,7 @@ public class ExceptionHandle {
 	public ResponseEntity<StandardError> invalidTokenHandle(InvalidTokenException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "UNAUTHORIZED",
-				"token is invalid", request.getRequestURI());
+				"Token invalido", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
@@ -71,7 +72,15 @@ public class ExceptionHandle {
 			HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Not Found",
-				"Username Not Found Exception", request.getRequestURI());
+				"Usuario não encontrado", request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	@ExceptionHandler(EmailNotValidException.class)
+	public ResponseEntity<StandardError> EmailNotValidHandle(EmailNotValidException e,
+			HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Email not valid",
+				"Email invalido", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 
