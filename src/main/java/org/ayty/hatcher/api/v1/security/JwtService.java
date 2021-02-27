@@ -1,6 +1,7 @@
 package org.ayty.hatcher.api.v1.security;
 
 import java.time.Instant;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -27,6 +28,7 @@ public class JwtService {
 	private String secretKey;
 	@Value("${security.jwt.token.expire-length}")
 	private String expiration;
+	
 	private final UserRepository userBD;
 
 	public String generateToken(LoginDTO user) {
@@ -36,19 +38,12 @@ public class JwtService {
 		Date date = Date.from(instant);
 		HashMap<String, Object> claim = new HashMap<String, Object>();
 		Optional<User> userAdmin = userBD.findByLogin(user.getLogin());
-		if (userAdmin.get().isAdmin() == true) {
-			claim.put("Roles", "ADMIN");
-			claim.put("Login", user.getLogin());
-			claim.put("Email", userAdmin.get().getEmail());
-			claim.put("Id", userAdmin.get().getId());
-		} else {
-			claim.put("Roles", "USER");
-			claim.put("Login", user.getLogin());
-			claim.put("Email", userAdmin.get().getEmail());
-			claim.put("Id", userAdmin.get().getId());
-		}
-		String token = Jwts.builder().setSubject(user.getLogin()).setClaims(claim)
-				.signWith(SignatureAlgorithm.HS512, secretKey).setExpiration(date).compact();
+		claim.put("Login", user.getLogin());
+		claim.put("Email", userAdmin.get().getEmail());
+		claim.put("Id", userAdmin.get().getId());
+
+		String token = Jwts.builder().setClaims(claim).signWith(SignatureAlgorithm.HS512, secretKey).setExpiration(date)
+				.compact();
 		return token;
 	}
 	private Claims getClaims(String token) throws ExpiredJwtException {
@@ -65,6 +60,6 @@ public class JwtService {
 		}
 	}
 	public String getUserLogin(String token) throws ExpiredJwtException {
-		return (String) getClaims(token).getSubject();
+		return (String) getClaims(token).get("Login");
 	}
 }

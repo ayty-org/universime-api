@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import org.ayty.hatcher.api.v1.user.entity.Profile;
 import org.ayty.hatcher.api.v1.user.entity.User;
-import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
+import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPasswordException;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,13 @@ class LoadUserByUsarnameTest {
 	@Autowired
 	private UserRepository repositorio = mock(UserRepository.class);
 	
+	
 	private LoadUserByUsarname load = new LoadUserByUsarname(repositorio);
 	
 	
 	@Test
 	void UserAdminRolestest() {
-		User usuario = new User(2L,"vito", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2", false, Profile.ALUNO);
+		User usuario = new User(2L,"vito", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2",Profile.ALUNO);
 
 		when(repositorio.findByLogin("vito")).thenReturn(Optional.of(usuario));
 		
@@ -40,23 +41,19 @@ class LoadUserByUsarnameTest {
 		
 		
 	}
-	@Test
-	void UserRolesTests() {
-		User usuario2 = new User(2L,"vito", "senha", "ruan@gmail.com", "ruan cruz", "imagee 2", true, Profile.ALUNO);
 
-		when(repositorio.findByLogin("vito")).thenReturn(Optional.of(usuario2));
-		
-		UserDetails userD = load.loadUserByUsername("vito");
-
+<<<<<<< HEAD
 		
 		assertEquals("[ROLE_ADMIN, ROLE_USER]", userD.getAuthorities().toString());	
 		
 	}
+=======
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce
 	
 	@Test
 	void UserNamenonexistent() {
 
-		assertThrows(IncorrectUserOrPassword.class,() -> load.loadUserByUsername("cleyson"));
+		assertThrows(IncorrectUserOrPasswordException.class,() -> load.loadUserByUsername("cleyson"));
 	}
 
 }

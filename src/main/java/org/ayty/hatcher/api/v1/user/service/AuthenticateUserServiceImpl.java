@@ -1,10 +1,9 @@
 package org.ayty.hatcher.api.v1.user.service;
 
 import org.ayty.hatcher.api.v1.user.entity.User;
-
-import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPassword;
-import org.ayty.hatcher.api.v1.user.exception.LoginNotFound;
-import org.ayty.hatcher.api.v1.user.exception.UserDoesNotExist;
+import org.ayty.hatcher.api.v1.user.exception.IncorrectUserOrPasswordException;
+import org.ayty.hatcher.api.v1.user.exception.LoginNotFoundException;
+import org.ayty.hatcher.api.v1.user.exception.UserDoesNotExistException;
 import org.ayty.hatcher.api.v1.user.jpa.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,10 +15,16 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
+<<<<<<< HEAD:src/main/java/org/ayty/hatcher/api/v1/user/service/LoginImpl.java
 public class LoginImpl implements Login/*UserDetailsService*/ {
+=======
+public class AuthenticateUserServiceImpl implements AuthenticateUserService{
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce:src/main/java/org/ayty/hatcher/api/v1/user/service/AuthenticateUserServiceImpl.java
 
 	private final PasswordEncoder encoder;
+	private final UserRepository userDB;
 	private final LoadUserByUsarname load;
+<<<<<<< HEAD:src/main/java/org/ayty/hatcher/api/v1/user/service/LoginImpl.java
 	private final UserRepository userBD;
 	//private final UserServiceImpl userService;
 
@@ -27,19 +32,28 @@ public class LoginImpl implements Login/*UserDetailsService*/ {
 		System.out.println("user dentro do authenticate "+user.getLogin());
 
 		UserDetails userDetails = load.loadUserByUsername("admin");
+=======
+
+	public UserDetails authenticate(User user) {
+		
+		UserDetails userDetails = load.loadUserByUsername(user.getLogin());
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce:src/main/java/org/ayty/hatcher/api/v1/user/service/AuthenticateUserServiceImpl.java
 		
 		if (userDetails.getUsername() == null) {
-			throw new LoginNotFound();
+			throw new LoginNotFoundException();
 		}
 		
-		User usuario = userBD.findByLogin(user.getLogin()).orElseThrow(() -> new UserDoesNotExist());
+		User usuario = userDB.findByLogin(user.getLogin()).orElseThrow(() -> new UserDoesNotExistException());
 		boolean PasswordsMatch = encoder.matches(user.getPassword(), userDetails.getPassword());
+		
 		if (PasswordsMatch) {
 			return userDetails;
-		} else {
-			throw new IncorrectUserOrPassword();
+		} 
+		else {
+			throw new IncorrectUserOrPasswordException();
 		}
 	}
+<<<<<<< HEAD:src/main/java/org/ayty/hatcher/api/v1/user/service/LoginImpl.java
 /*
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -60,4 +74,10 @@ public class LoginImpl implements Login/*UserDetailsService*/ {
 				.build();
 	}
 	*/
+=======
+	
+	
+	
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce:src/main/java/org/ayty/hatcher/api/v1/user/service/AuthenticateUserServiceImpl.java
 }
+

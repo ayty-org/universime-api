@@ -4,7 +4,8 @@ import org.ayty.hatcher.api.v1.user.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @FunctionalInterface
-public interface Login {
+public interface AuthenticateUserService {
 	
 	UserDetails authenticate( User user );
+	
 }

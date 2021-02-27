@@ -1,9 +1,13 @@
 package org.ayty.hatcher.api.v1.security;
+<<<<<<< HEAD
 
 import org.ayty.hatcher.api.v1.user.service.LoadUserByUsarname;
 import org.ayty.hatcher.api.v1.user.service.LoginImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+import org.ayty.hatcher.api.v1.user.service.LoadUserByUsarname;
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,9 +21,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+<<<<<<< HEAD
 	//@Autowired
 	//private UserServiceImpl userService;
 	@Autowired
@@ -30,6 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	*/
 	@Autowired
 	LoadUserByUsarname load;
+=======
+	private final JwtService jwtService;
+	private final LoadUserByUsarname load;	
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -39,8 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(load).passwordEncoder(passwordEncoder());
+<<<<<<< HEAD
 
 		//auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+=======
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce
 	}
 	@Bean
 	public OncePerRequestFilter jwtFilter() {
@@ -48,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	 @Override
 	    protected void configure( HttpSecurity http ) throws Exception {
-	        this.PermitAll(http);
+	        this.permitAll(http);
 	        
 	    }
 	 @Override
@@ -61,21 +76,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                "/swagger-ui.html",
 	                "/webjars/**");
 	    }
-	 private void PermitAll(HttpSecurity http) throws Exception{
+	 private void permitAll(HttpSecurity http) throws Exception{
 		 http
          .cors().and().csrf().disable()
          .authorizeRequests()
          .antMatchers("/hatcher")
 				.permitAll()
-         .antMatchers(HttpMethod.POST,"/hatcher")
- 			.permitAll()
-         	.antMatchers(HttpMethod.POST,"/hatcher/auth")
+         	.antMatchers(HttpMethod.POST,"/api/v1/hatcher/auth")
          	.permitAll()
-         	.antMatchers(HttpMethod.GET,"/hatcher/listUsers")
+         	.antMatchers(HttpMethod.PUT,"/api/v1/hatcher/update/**")
+         	.permitAll()
+         	.antMatchers(HttpMethod.GET,"/api/v1/hatcher/getById/**")
+         	.permitAll()
+         	.antMatchers(HttpMethod.GET,"/api/v1/hatcher/listUsers")
          		.permitAll()
-         	.antMatchers(HttpMethod.POST,"/hatcher/register")
+         	.antMatchers(HttpMethod.POST,"/api/v1/hatcher/register")
          		.permitAll()
-           	.antMatchers(HttpMethod.DELETE,"/hatcher/remove/**")
+           	.antMatchers(HttpMethod.DELETE,"/api/v1/hatcher/remove/**")
          		.permitAll()
              .anyRequest().authenticated()
          .and()
@@ -85,21 +102,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .addFilterBefore( jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 		 
 	 }
-	 private void HasRole(HttpSecurity http) throws Exception{
+	 private void hasRole(HttpSecurity http) throws Exception{
 		 http
          .cors().and().csrf().disable()
          .authorizeRequests()
-         .antMatchers("/hatcher")
-				.permitAll()
          .antMatchers(HttpMethod.POST,"/hatcher")
  			.permitAll()
-         	.antMatchers(HttpMethod.POST,"/hatcher/auth")
+         	.antMatchers(HttpMethod.POST,"/api/v1/hatcher/auth")
          		.hasAnyRole("USER,ADMIN")
-         	.antMatchers(HttpMethod.GET,"/hatcher/listUsers")
+         	.antMatchers(HttpMethod.GET,"/api/v1/hatcher/listUsers")
          		.hasAnyRole("USER,ADMIN")
-         	.antMatchers(HttpMethod.POST,"/hatcher/register")
+         	.antMatchers(HttpMethod.POST,"/api/v1/hatcher/register")
          		.hasAnyRole("ADMIN")
-         	.antMatchers(HttpMethod.DELETE,"/hatcher/remove/**")
+         	.antMatchers(HttpMethod.DELETE,"/api/v1/hatcher/remove/**")
          		.hasAnyRole("USER,ADMIN")
              .anyRequest().authenticated()
          .and()
@@ -107,23 +122,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
          .and()
              .addFilterBefore( jwtFilter(), UsernamePasswordAuthenticationFilter.class);
-		 
 	 }
-	 /*
-	    @Bean
-	    public CorsFilter corsFilter() {
-	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	        CorsConfiguration config = new CorsConfiguration();
-	        config.setAllowCredentials(true);
-	        config.addAllowedOrigin("*");
-	        config.addAllowedHeader("*");
-	        config.addAllowedMethod(HttpMethod.GET);
-	        config.addAllowedMethod(HttpMethod.POST);
-	        config.addAllowedMethod(HttpMethod.PUT);
-	        config.addAllowedMethod(HttpMethod.DELETE);
-	        config.addAllowedMethod(HttpMethod.OPTIONS);
-	        source.registerCorsConfiguration("/**", config);
-	        return new CorsFilter(source);
-	    }
-	    */
+	 private void authenticate(HttpSecurity http) throws Exception{
+		 http
+         .cors().and().csrf().disable()
+         .authorizeRequests()
+         .antMatchers(HttpMethod.POST,"/api/v1/hatcher")
+ 			.permitAll()
+         	.antMatchers(HttpMethod.POST,"/api/v1/hatcher/auth")
+         		.permitAll()
+         	.antMatchers(HttpMethod.GET,"/api/v1/hatcher/listUsers")
+         		.authenticated()
+         	.antMatchers(HttpMethod.POST,"/api/v1/hatcher/register")
+         		.authenticated()
+         	.antMatchers(HttpMethod.DELETE,"/api/v1/hatcher/remove/**")
+         		.authenticated()
+             .anyRequest().authenticated()
+         .and()
+             .sessionManagement()
+             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+         .and()
+             .addFilterBefore( jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+	 }
 }

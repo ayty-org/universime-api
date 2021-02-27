@@ -3,14 +3,21 @@ package org.ayty.hatcher.api.v1.security;
 import java.io.IOException;
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+<<<<<<< HEAD
 
 import org.ayty.hatcher.api.v1.user.service.LoadUserByUsarname;
 import org.ayty.hatcher.api.v1.user.service.LoginImpl;
+=======
+import org.ayty.hatcher.api.v1.user.service.LoadUserByUsarname;
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,18 +31,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 	private final JwtService jwtService;
 	
+<<<<<<< HEAD
 	//private final LoginImpl loginImpl;
 	
 	//private final UserServiceImpl userService;
 	
 	private final LoadUserByUsarname load;
 
+=======
+	private final LoadUserByUsarname load;
+	
+>>>>>>> 99c1be54733d7982261023e81b2988827822cbce
 	@Override
 	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,FilterChain filterChain) throws ServletException, IOException {
 
 		String authorization = httpServletRequest.getHeader("Authorization");
 		if (authorization != null && authorization.startsWith("Bearer")) {
 			String token = authorization.split(" ")[1];
+
 			boolean isValid = jwtService.validToken(token);
 			if (isValid) {
 				String userLogin = jwtService.getUserLogin(token);
