@@ -4,12 +4,6 @@ Brackend realizado com Springboot para o [Universi.me](http://universi.me "Unive
 
 # Padrão de organização
 
-**Sumário**
-
-[TOCM]
-
-[TOC]
-
 ## Documentação completa no Driver
 Aqui contém a documentação com as imagens e tutorial passo a passo.
 **Documentação .DOCS:** [Clique aqui.](http://https://docs.google.com/document/d/1rbkOsDXkWtgD5eXiYU25iHqjVUIBV-9oHlhJ408XKMw/edit "Clique aqui.")
@@ -45,7 +39,7 @@ As branches vão seguir uma padronização semelhante ao Gitflow, onde cada bran
 - **refactor/ :** É uma branch realizada para quando há apenas refatoramento de um código.
 - **master :** É a branch que possui código em produção.
 
-> Obs.> Obs. A branch **Dev/Main** contém a última versão funcional para os desenvolvedores.
+> Obs. A branch **Dev/Main** contém a última versão funcional para os desenvolvedores.
 
 ## Como encontrar o identificador da issue/task
 Toda Issue/Task possui um identificador, você pode encontrá-lo facilmente ao lado ou embaixo do nome dela.
@@ -53,9 +47,9 @@ Toda Issue/Task possui um identificador, você pode encontrá-lo facilmente ao l
 Para nomear uma branch, utilize o tipo dela, o identificador da issue/tasks e mais algo que a faça identificável.
 **Exemplo:  **
 Ex1. Eu quero fazer uma nova funcionalidade de listar Usuário, então minha branch ficará assim…
-`feature/18-listar-usuario`
+> `feature/18-listar-usuario`
 Ex2. Eu preciso fazer um refatoramento de tal branch ou código, então…
-`refactor/19-listar-usuario`
+> `refactor/19-listar-usuario`
 
 # Padronização de commits
 Para a padronização de commit, você pode commitar de forma mais livre, contanto que siga estes passos…
