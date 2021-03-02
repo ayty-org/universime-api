@@ -35,7 +35,6 @@ public class ProjectDTO implements Serializable {
     private String logo;
 
    @NotEmpty
-   @NonNull
     private LocalDate startDate;
 
 
