@@ -55,7 +55,6 @@ public class Project implements Serializable {
     //@NotEmpty
     private String logo;
 
-   @NotNull
    @NotEmpty
     private LocalDate startDate;
 
