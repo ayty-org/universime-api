@@ -28,4 +28,3 @@ security:
     token:
       secret-key: 8xATUx4r2L52
       expire-length: 604800000 #1 week
-
